@@ -1,6 +1,5 @@
 <template>
   <div>
-      movie page
       <MovieConts></MovieConts>
   </div>
 </template>

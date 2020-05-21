@@ -1,6 +1,5 @@
 <template>
   <div>
-      Main page
       <MainConts></MainConts>
   </div>
 </template>
@@ -16,5 +15,4 @@ export default {
 </script>
 
 <style scoped>
-div{ border:2px solid blueviolet; }
 </style>

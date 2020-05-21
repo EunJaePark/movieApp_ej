@@ -21,5 +21,6 @@ export default {
 </script>
 
 <style>
-
+@import '../src/css/common.css';
+@import '../src/css/reset.css';
 </style>

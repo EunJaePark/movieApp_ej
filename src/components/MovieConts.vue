@@ -1,8 +1,26 @@
 <template>
-  <div>
-      movie page 연결 된 movieConts페이지.
-      <br/>
-      {{ moviedata }}
+  <div class="movieConts">
+    <h2>" {{ moviedata.KMAQuery }} "</h2>
+
+    <div class="dataBox clear">
+        <div class="movies" v-if="dataInMoviedata">
+            <div 
+                class="movie"
+                v-for="(movie, index) in dataInMoviedata[0].Result " :key="index">
+                <div class="imgTitle">
+                    <img src="" alt="영화 포스터(url데이터없음)"/>
+                    <p>제목: {{ dataInMoviedata[0].Result[index].title }}</p>
+                </div>
+                <ul class="textData">
+                    <li>장르: {{ dataInMoviedata[0].Result[index].genre }}</li>
+                    <li>포스터url: {{ dataInMoviedata[0].Result[index].posterUrl }}</li>
+                    <li><a v-bind:href="dataInMoviedata[0].Result[index].kmdbUrl">상세정보</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- {{ moviedata }} -->
   </div>
 </template>
 
@@ -13,7 +31,10 @@ export default {
     computed: {
         moviedata() {
             return this.$store.state.moviedata;
-        }
+        },
+        dataInMoviedata() {
+            return this.moviedata.Data;
+        },
     },
     created() {
         // 이벤트버스로 mainConts에서 입력한 검색어 불러옴.
