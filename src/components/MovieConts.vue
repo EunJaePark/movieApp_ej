@@ -19,16 +19,16 @@
                 </div>
 
                 <ul class="textData">
-                    <li>장르: {{ movie.genre }}</li>
-                    <li>줄거리: {{ movie.plots.plot[0].plotText }}</li>
-                    <li>감독: {{ textEdit(movie.directors.director[0].directorNm) }}</li>
-                    <li>배우: 
+                    <li v-if="movie.genre !== ''">장르: {{ movie.genre }}</li>
+                    <li v-if="movie.directors.director[0].directorNm !== ''">감독: {{ textEdit(movie.directors.director[0].directorNm) }}</li>
+                    <li v-if="movie.actors.actor[0].actorNm !== ''">배우: 
                         <span 
                             v-for="actorName in movie.actors.actor" 
                             v-bind:key="actorName.actorId">
                                 {{ actorName.actorNm }}, 
                             </span> 
                     </li>
+                    <li v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</li>
                     <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>
                 </ul>
 
@@ -37,8 +37,11 @@
                     - 영화 포스터 주소 전체
                     {{ movie.posters }} 
                     <br/><br/>
-                    - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.
+                    - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.('g'철자로 자름.)
                     {{ movie.posters.substring(0, movie.posters.indexOf(movie.posters.match(/g/i)) + 1) }}
+                    <br/><br/>
+                    - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.('|'기호로 자름.)
+                    {{ posterURL(movie.posters) }}
                     <br/><br/>
             </div><!--.movieBox-->
         </div><!--.movies-->
@@ -89,12 +92,16 @@ export default {
     },
     methods: {
         // poster url 편집.(url이 두개 이상일 경우 첫번째 url만 추출)
-        posterURL(url) {
-            if(url !== '') { // poster url이 있을 경우
+        posterURL(url) {            
+            if(url.indexOf('|') === -1) {   // url이 1개일 경우
+                return url;
+            } else if(url.indexOf('|')) {   // url이 2개 이상일 경우  
                 // poster url이 두개 이상일 경우 jpg의 마지막 글자인 g의 index순번만큼 주소 추출.
                 //  | <- 이 기호를 기준으로 했더니 url 주소가 하나일 경우 주소가 아예 사라져 버려서 jpg글자로 판단해주는 것으로 수정.
-                return url.substring(0, url.indexOf(url.match(/g/i)) + 1);  
-            } else {
+                // return url.substring(0, url.indexOf(url.match(/g/i)) + 1); 
+                // '|'로 기준을 바꿔줌. 대신 기존과 달리 3가지의 경우로 분류함. 
+                return url.substring(0, url.indexOf('|')); 
+            } else if(url.indexOf('http') === -1) {   // url이 없을 경우
                 // poster url주소가 없을 경우 빈 이미지 추출.
                 return 'http://placehold.it/213x303'
             }
