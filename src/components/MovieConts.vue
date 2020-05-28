@@ -11,15 +11,24 @@
                 <div class="imgTitle">
                     <img                     
                         v-bind:src="posterURL(movie.posters)" 
-                        :alt="movie.title.replace(/!HS|!HE/g, '')"/>
+                        v-bind:alt="textEdit(movie.title)"/>
 
                     <!-- title의 불필요한 글자 삭제해줌. -->
-                    <p>제목: {{ movie.title.replace(/!HS|!HE/g, '') }}</p>
-                    <p>제목: {{ movieTitle(movie.title) }}</p>
+                    <!-- <p>제목: {{ movie.title.replace(/!HS|!HE/g, '') }}</p> -->
+                    <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p>
                 </div>
 
                 <ul class="textData">
                     <li>장르: {{ movie.genre }}</li>
+                    <li>줄거리: {{ movie.plots.plot[0].plotText }}</li>
+                    <li>감독: {{ textEdit(movie.directors.director[0].directorNm) }}</li>
+                    <li>배우: 
+                        <span 
+                            v-for="actorName in movie.actors.actor" 
+                            v-bind:key="actorName.actorId">
+                                {{ actorName.actorNm }}, 
+                            </span> 
+                    </li>
                     <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>
                 </ul>
 
@@ -90,11 +99,15 @@ export default {
                 return 'http://placehold.it/213x303'
             }
         },
-        // title 편집.
-        movieTitle(title) {
+        // title, name, genre 편집.
+        textEdit(text) {
             // 검색어를 나타내는 !HE, !HS글자 삭제.
-            return title.replace(/!HE|!HS/g, '');
-        }
+            return text.replace(/!HE|!HS/g, '');
+        },
+        // 출연 배우가 많을 경우 5명까지만 추출하고 싶음.
+        // actorKey(actor) {
+        //     if(actor) 
+        // },
 
         // moviedata() {
         //     this.$store.state.result;

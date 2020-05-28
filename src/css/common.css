@@ -33,4 +33,5 @@ body{ background-color:gainsboro; }
 .movieConts{ width:100%; max-width:1000px; margin:0 auto; padding:50px; }
 .movieConts > h2{  text-align:center; }
 .movieBox{ border-bottom:2px solid rgba(53, 52, 52, .3); padding:30px; }
+.movieBox > .textData > li{ margin:15px 0; }
 /* .imgTitle > img{ width:213px; height:303px; display:inline-block; } */
