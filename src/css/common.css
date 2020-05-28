@@ -26,11 +26,11 @@ body{ background-color:gainsboro; }
 
 /* ----------MovieConts---------- */
 /* .movieConts{ outline:2px solid red; }
-.movie{ outline:2px solid blue; width:220px; float:left; position:relative; }
-.movie > .imgTitle { width:220px; height:300px; }
-.movie > .textData{ background-color:rgba(0, 0, 0, .2); width:220px; height:300px; position:absolute; top:0; }
-.movie > .textData > li{ width:100%; } */
+.movieBox{ outline:2px solid blue; width:220px; float:left; position:relative; }
+.movieBox > .imgTitle { width:220px; height:300px; }
+.movieBox > .textData{ background-color:rgba(0, 0, 0, .2); width:220px; height:300px; position:absolute; top:0; }
+.movieBox > .textData > li{ width:100%; } */
 .movieConts{ width:100%; max-width:1000px; margin:0 auto; padding:50px; }
 .movieConts > h2{  text-align:center; }
-.movie{ border-bottom:2px solid rgba(53, 52, 52, .3); padding:30px; }
+.movieBox{ border-bottom:2px solid rgba(53, 52, 52, .3); padding:30px; }
 /* .imgTitle > img{ width:213px; height:303px; display:inline-block; } */

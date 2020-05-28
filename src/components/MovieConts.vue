@@ -6,43 +6,39 @@
     <div class="dataBox clear">
         <div class="movies" v-if="dataInMoviedata">  <!--  v-if는 없어도 될듯. -->
             <div 
-                class="movie"
-                v-for="(movie, index) in movieResult " v-bind:key="index">
+                class="movieBox"
+                v-for="movie in movieResult " v-bind:key="movie.DOCID">
                 <div class="imgTitle">
-                    <img 
-                        v-if="movieResult[index].posters !== ''"
-                        v-bind:src="movieResult[index].posters.substring(0, movieResult[index].posters.indexOf(movieResult[index].posters.match(/g/i)) + 1)" 
-                        :alt="movieResult[index].title.replace(/!HS|!HE/g, '')"/>
-                    <img 
-                        v-else
-                        src="http://placehold.it/213x303" 
-                        alt="영화 포스터(url데이터없음)"/>
+                    <img                     
+                        v-bind:src="posterURL(movie.posters)" 
+                        :alt="movie.title.replace(/!HS|!HE/g, '')"/>
 
                     <!-- title의 불필요한 글자 삭제해줌. -->
-                    <p>제목: {{ movieResult[index].title.replace(/!HS|!HE/g, '') }}</p>
+                    <p>제목: {{ movie.title.replace(/!HS|!HE/g, '') }}</p>
+                    <p>제목: {{ movieTitle(movie.title) }}</p>
                 </div>
 
                 <ul class="textData">
-                    <li>장르: {{ movieResult[index].genre }}</li>
-                    <li><a v-bind:href="movieResult[index].kmdbUrl" target="blanket">상세정보</a></li>
+                    <li>장르: {{ movie.genre }}</li>
+                    <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>
                 </ul>
 
 
                     <br/><br/>
                     - 영화 포스터 주소 전체
-                    {{ movieResult[index].posters }} 
+                    {{ movie.posters }} 
                     <br/><br/>
                     - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.
-                    {{ movieResult[index].posters.substring(0, movieResult[index].posters.indexOf(movieResult[index].posters.match(/g/i)) + 1) }}
+                    {{ movie.posters.substring(0, movie.posters.indexOf(movie.posters.match(/g/i)) + 1) }}
                     <br/><br/>
-            </div>
-        </div>
-    </div>
+            </div><!--.movieBox-->
+        </div><!--.movies-->
+    </div><!--.dataBox-->
     
     <br/><br/>
 
     {{ moviedata }}
-  </div>
+  </div><!--.movieConts-->
 </template>
 
 <script>
@@ -83,6 +79,23 @@ export default {
 
     },
     methods: {
+        // poster url 편집.(url이 두개 이상일 경우 첫번째 url만 추출)
+        posterURL(url) {
+            if(url !== '') { // poster url이 있을 경우
+                // poster url이 두개 이상일 경우 jpg의 마지막 글자인 g의 index순번만큼 주소 추출.
+                //  | <- 이 기호를 기준으로 했더니 url 주소가 하나일 경우 주소가 아예 사라져 버려서 jpg글자로 판단해주는 것으로 수정.
+                return url.substring(0, url.indexOf(url.match(/g/i)) + 1);  
+            } else {
+                // poster url주소가 없을 경우 빈 이미지 추출.
+                return 'http://placehold.it/213x303'
+            }
+        },
+        // title 편집.
+        movieTitle(title) {
+            // 검색어를 나타내는 !HE, !HS글자 삭제.
+            return title.replace(/!HE|!HS/g, '');
+        }
+
         // moviedata() {
         //     this.$store.state.result;
             
