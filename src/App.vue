@@ -1,8 +1,9 @@
 <template>
   <div>
     <AppHeader></AppHeader>
-    <MainPage></MainPage>
-    <MoviePage></MoviePage>
+    <!-- <MainPage></MainPage>
+    <MoviePage></MoviePage> -->
+    <router-view></router-view>
   </div>
 </template>
 

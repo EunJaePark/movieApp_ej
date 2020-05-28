@@ -9,6 +9,8 @@ Vue.config.productionTip = false
 export const eventbus = new Vue({
   methods: {
     passSearchTxt(searchText, check) {
+      console.log('이벤트버스 함수 실행되나!!!!');
+      
       this.$emit('sendSearch', searchText, check)
     }
   }

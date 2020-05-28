@@ -33,6 +33,8 @@
         <input 
             class="title" type="text" placeholder="키워드를 입력하세요" 
             v-model="searchText" v-if="check === 'keyCK'" />
+
+        <button>입력</button>
       </form> 
   </div>
 </template>
@@ -49,9 +51,22 @@ export default {
     },
     methods: {
         titleSend() {
+            console.log('검색어 넘긴다!!!!');
             console.log(this.searchText, this.check);
-            // 영화검색명을 MovieConts로 보내기 위함.(main.js에 작성해놓은 이벤트버스)
+            // (영화검색명 + 체크박스상태)를 MovieConts로 보내기 위함.(main.js에 작성해놓은 이벤트버스)
             eventbus.passSearchTxt(this.searchText, this.check);
+            console.log('이벤트버스로 데이터 넘긴 다음 행.');
+            // router이동 주소 보내줌.
+            this.$router.push('/movie');
+
+            const searchTxt = {
+                searchTxt : this.searchText, 
+                check : this.check
+            };
+            console.log(searchTxt);
+            
+            // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
+            this.$store.commit('STATE_UTL', searchTxt);
 
             // input창 비워줌.
             this.searchText = '';
