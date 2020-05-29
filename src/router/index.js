@@ -17,6 +17,10 @@ export default new VueRouter({
     {
       path: '/movie',
       component: () => import('../views/MoviePage.vue')
+    },
+    {
+      path: '/inform',
+      component: () => import('../views/InformPage.vue')
     }
   ]
 })

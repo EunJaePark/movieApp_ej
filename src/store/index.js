@@ -9,6 +9,7 @@ export default new Vuex.Store({
     moviedata: [],
     searchTxt: '',
     result: [],
+    clickMovie: [],
   },
   mutations: {
     SET_URL(state, data) {
@@ -17,10 +18,14 @@ export default new Vuex.Store({
       state.moviedata = data
       // 영화 세부 정보 데이터.
       state.result = data.Data[0].Result
+      // state.thisMovie = data.Data[this.state.index].Result
     },
     STATE_UTL(state, searchTxt) {
       state.searchTxt = searchTxt
     },
+    CLICK_MOVIE(state, movie) {
+      state.clickMovie = movie
+    }
   },
   actions: {
     FETCH_TITLE(context, data) {
@@ -62,7 +67,12 @@ export default new Vuex.Store({
           
         }) 
       }
-    }
+    },
+    // // 클릭한 poster의 영화 id 넘겨줌.
+    // MOVIE_CLICK(context, movie) {
+    //   console.log('클릭한 영화데이터 넘어왔따.');    
+    //   return context.commit('CLICK_MOVIE', movie) 
+    // }
   },
   modules: {
   }

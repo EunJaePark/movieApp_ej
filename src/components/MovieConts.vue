@@ -9,8 +9,8 @@
             <!-- v-if를 줘서 영화 데이터가 존재할 때만 영화 정보 박스(.movies)를 보이게 함. + movieResult속에 있는 데이터들 사용하려면 적어줘야함.(왜그런지는 모르겠다..) -->
             <div 
                 class="movieBox"
-                v-for="movie in movieResult " v-bind:key="movie.DOCID">
-                <div class="imgTitle">
+                v-for="(movie, index) in movieResult " v-bind:key="index" >
+                <div class="imgTitle" @click="moveInform(movie)">
                     <img                     
                         v-bind:src="posterURL(movie.posters)" 
                         v-bind:alt="textEdit(movie.title)"/>
@@ -22,6 +22,7 @@
                     <div class="hoverBox">
                         <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p>
                         <p>감독: {{ textEdit(movie.directors.director[0].directorNm) }}</p>
+                        <p class="story" v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</p>
                     </div>
                 </div>
                 
@@ -130,6 +131,11 @@ export default {
         // 다시 검색하기 버튼 클릭 시 main페이지로 이동.
         goMain() {
             this.$router.push('/main');
+        },
+        // poster클릭 시 세부 정보 페이지(InformPage)로 이동.
+        moveInform(movie) {
+            this.$store.commit('CLICK_MOVIE', movie);
+            this.$router.push('/inform');
         }
 
         // moviedata() {

@@ -44,6 +44,13 @@ body{ background-color:gainsboro; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle{ width:213px; height:303px; cursor:pointer;  position:relative; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle > img{ width:100%; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox{ outline:1px solid red; width:100%; height:100%; color:#fff; background-color:rgba(0, 0, 0, .8); position:absolute; top:0; left:0; opacity:0; }
+.movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox > p.story{    
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp:7;
+    -webkit-box-orient: vertical;
+    display:-webkit-box;  }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox:hover{ opacity:1; }
 .movieConts > .dataBox > .movies > .movieBox > .textData > li{ margin:15px 0; }
 /* .imgTitle > img{ width:213px; height:303px; display:inline-block; } */
