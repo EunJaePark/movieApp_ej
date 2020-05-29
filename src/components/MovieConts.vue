@@ -26,7 +26,7 @@
                             v-for="actorName in movie.actors.actor" 
                             v-bind:key="actorName.actorId">
                                 {{ actorName.actorNm }}, 
-                            </span> 
+                        </span> 
                     </li>
                     <li v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</li>
                     <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>

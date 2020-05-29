@@ -1,12 +1,16 @@
 <template>
   <div class="appHeader">
-      Movie App (스터디용) 
+      <button @click.prevent="goMain">Movie App (스터디용)</button>
   </div>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    goMain() {
+      this.$router.push('/main');
+    }
+  }
 }
 </script>
 

@@ -5,7 +5,9 @@ body{ background-color:gainsboro; }
 .clear:after{ content:''; display:block; clear:both; }
 
 /* ----------AppHeader---------- */
-.appHeader{ width:100%; line-height:50px; padding:30px; text-align:center; font-size:30px; background-color:#353434; color:gainsboro; }
+.appHeader{ width:100%; line-height:50px; padding:30px; text-align:center; font-size:30px; background-color:#353434; }
+.appHeader > button{ border:none; color:gainsboro; font-size:30px; background-color:transparent; }
+.appHeader > button:focus{ outline:none; }
 
 
 /* ----------MainConts---------- */
