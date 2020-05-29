@@ -1,6 +1,6 @@
 /* common */
 *{ margin:0; padding:0; }
-body{ background-color:gainsboro; }
+body{ background-color:gainsboro;  }
 
 .clear:after{ content:''; display:block; clear:both; }
 
@@ -44,7 +44,7 @@ body{ background-color:gainsboro; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle{ width:213px; height:303px; cursor:pointer;  position:relative; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle > img{ width:100%; }
 .movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox{ outline:1px solid red; width:100%; height:100%; color:#fff; background-color:rgba(0, 0, 0, .8); position:absolute; top:0; left:0; opacity:0; }
-.movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox > p.story{    
+.movieConts > .dataBox > .movies > .movieBox > .imgTitle > .hoverBox > p.story{    /* 줄거리 내용 길면 ...으로 줄여줌. */ 
     overflow: hidden;
     text-overflow: ellipsis;
     word-wrap: break-word;
@@ -56,3 +56,30 @@ body{ background-color:gainsboro; }
 /* .imgTitle > img{ width:213px; height:303px; display:inline-block; } */
 
 .movieConts > .dataBox > .nodataTxt{ margin-top:100px; font-size:20px; text-align:center; }
+
+
+
+
+/* ----------InformConts---------- */
+.infromConts{ outline:1px solid red; width:100%; max-width:1000px; margin:50px auto; }
+.infromConts > .topData{ outline:2px solid blue; width:100%; }
+.infromConts > .topData > *{ outline:2px solid lime; float:left; }
+.infromConts > .topData > .summaryBox{ width:calc(100% - 243px); margin-left:30px; }
+.infromConts > .topData > .summaryBox > .title{ outline:px solid pink; margin-bottom:20px; }
+.infromConts > .topData > .summaryBox > .title > h2{ font-size:18px; font-weight:400; }
+.infromConts > .topData > .summaryBox > .title > .engTitle{ font-size:13px; color:#6b6b6b; }
+.infromConts > .topData > .summaryBox > .otherData{ outline:px solid orange; font-size:14px; }
+.infromConts > .topData > .summaryBox > .otherData > .other1,
+.infromConts > .topData > .summaryBox > .otherData > .other2{ margin:5px 0; }
+.infromConts > .topData > .summaryBox > .otherData > .other1 > span + span,
+.infromConts > .topData > .summaryBox > .otherData > .other2 > span + span{ margin-left:12px; }
+.infromConts > .topData > .summaryBox > .otherData > .other1 > span + span:before,
+.infromConts > .topData > .summaryBox > .otherData > .other2 > span + span:before{ content:''; display:inline-block; border-left:1px solid #c2c1c1; width:0px; height:13px; padding-right:12px;  }
+
+.infromConts > .detailBox{ outline:5px solid lightskyblue; margin-top:50px; }
+.infromConts > .detailBox > .movieSlogan{ font-weight:600; color:#6b6b6b; }
+.infromConts > .detailBox > .movieStory{ line-height:25px; margin:30px 0;  font-size:15px; color:#6b6b6b; }
+
+
+
+
