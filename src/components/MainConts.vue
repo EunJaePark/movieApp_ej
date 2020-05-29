@@ -36,6 +36,8 @@
 
         <button>입력</button>
       </form> 
+
+      <!-- <p>해당하는 영화가 없습니다.</p> -->
   </div>
 </template>
 

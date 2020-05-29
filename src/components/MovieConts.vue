@@ -1,10 +1,12 @@
 <template>
   <div class="movieConts">
+    <button class="gomainBtn" @click.prevent="goMain">← 다시 검색하기</button>
       <!-- 검색한 단어 출력 -->
     <h2>" {{ moviedata.KMAQuery }} "</h2>
 
     <div class="dataBox clear">
-        <div class="movies" v-if="dataInMoviedata">  <!--  v-if는 없어도 될듯. -->
+        <div class="movies" v-if="movieResult"> 
+            <!-- v-if를 줘서 영화 데이터가 존재할 때만 영화 정보 박스(.movies)를 보이게 함. + movieResult속에 있는 데이터들 사용하려면 적어줘야함.(왜그런지는 모르겠다..) -->
             <div 
                 class="movieBox"
                 v-for="movie in movieResult " v-bind:key="movie.DOCID">
@@ -15,10 +17,18 @@
 
                     <!-- title의 불필요한 글자 삭제해줌. -->
                     <!-- <p>제목: {{ movie.title.replace(/!HS|!HE/g, '') }}</p> -->
-                    <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p>
-                </div>
+                    <!-- <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p> -->
 
-                <ul class="textData">
+                    <div class="hoverBox">
+                        <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p>
+                        <p>감독: {{ textEdit(movie.directors.director[0].directorNm) }}</p>
+                    </div>
+                </div>
+                
+
+
+
+                <!-- <ul class="textData">
                     <li v-if="movie.genre !== ''">장르: {{ movie.genre }}</li>
                     <li v-if="movie.directors.director[0].directorNm !== ''">감독: {{ textEdit(movie.directors.director[0].directorNm) }}</li>
                     <li v-if="movie.actors.actor[0].actorNm !== ''">배우: 
@@ -30,10 +40,10 @@
                     </li>
                     <li v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</li>
                     <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>
-                </ul>
+                </ul> -->
 
 
-                    <br/><br/>
+                    <!-- <br/><br/>
                     - 영화 포스터 주소 전체
                     {{ movie.posters }} 
                     <br/><br/>
@@ -42,14 +52,15 @@
                     <br/><br/>
                     - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.('|'기호로 자름.)
                     {{ posterURL(movie.posters) }}
-                    <br/><br/>
+                    <br/><br/> -->
             </div><!--.movieBox-->
         </div><!--.movies-->
+
+        <p class="nodataTxt" v-else>해당하는 영화가 없습니다.</p>
     </div><!--.dataBox-->
     
     <br/><br/>
-
-    {{ moviedata }}
+    <!-- {{ moviedata }} -->
   </div><!--.movieConts-->
 </template>
 
@@ -61,9 +72,9 @@ export default {
         moviedata() {
             return this.$store.state.moviedata;
         },
-        dataInMoviedata() {
-            return this.moviedata.Data;
-        },
+        // dataInMoviedata() {
+        //     return this.moviedata.Data;
+        // },
         movieResult() {
             return this.$store.state.result;
         },
@@ -93,18 +104,18 @@ export default {
     methods: {
         // poster url 편집.(url이 두개 이상일 경우 첫번째 url만 추출)
         posterURL(url) {            
-            if(url.indexOf('|') === -1) {   // url이 1개일 경우
+            if(url === '') {   // url이 없을 경우
+                // poster url주소가 없을 경우 빈 이미지 추출.
+                return 'http://placehold.it/213x303';
+            }else if(url.indexOf('|') === -1) {   // url이 1개일 경우
                 return url;
-            } else if(url.indexOf('|')) {   // url이 2개 이상일 경우  
+            }else if(url.indexOf('|')) {   // url이 2개 이상일 경우  
                 // poster url이 두개 이상일 경우 jpg의 마지막 글자인 g의 index순번만큼 주소 추출.
                 //  | <- 이 기호를 기준으로 했더니 url 주소가 하나일 경우 주소가 아예 사라져 버려서 jpg글자로 판단해주는 것으로 수정.
                 // return url.substring(0, url.indexOf(url.match(/g/i)) + 1); 
                 // '|'로 기준을 바꿔줌. 대신 기존과 달리 3가지의 경우로 분류함. 
                 return url.substring(0, url.indexOf('|')); 
-            } else if(url.indexOf('http') === -1) {   // url이 없을 경우
-                // poster url주소가 없을 경우 빈 이미지 추출.
-                return 'http://placehold.it/213x303'
-            }
+            } 
         },
         // title, name, genre 편집.
         textEdit(text) {
@@ -115,6 +126,11 @@ export default {
         // actorKey(actor) {
         //     if(actor) 
         // },
+
+        // 다시 검색하기 버튼 클릭 시 main페이지로 이동.
+        goMain() {
+            this.$router.push('/main');
+        }
 
         // moviedata() {
         //     this.$store.state.result;
@@ -144,5 +160,5 @@ export default {
 </script>
 
 <style scoped>
-.imgTitle > img{ width:213px; height:303px; }
+
 </style>
