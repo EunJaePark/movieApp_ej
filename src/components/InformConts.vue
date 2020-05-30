@@ -57,21 +57,23 @@
           </p>
           
             {{ photoIndex(clickMovieData.stlls) }}
-          <div class="stills">
-            <P style="width:100%; overflow:scroll;">스틸컷url: {{ clickMovieData.stlls }}</P>
+          <div class="movieStlls">
+            <!-- <P style="width:100%; overflow:scroll;">스틸컷url: {{ clickMovieData.stlls }}</P> -->
             <div  v-for="(photo, imgIndex) in photoIndex(clickMovieData.stlls)" :key="imgIndex" >
               <img :src="stllImgURL(clickMovieData.stlls, imgIndex)" alt="" />
               {{ imgIndex }}
             </div>
           </div>
 
-          <p v-if="clickMovieData.actors.actor[0].actorNm !== ''">배우: 
-              <span 
-                v-for="actorName in clickMovieData.actors.actor" 
-                v-bind:key="actorName.actorId">
-                  {{ actorName.actorNm }}, 
-              </span> 
-          </p>
+          <div class="movieActor clear" v-if=" clickMovieData.actors.actor[0].actorNm">
+            <div
+              v-for="(actorName, index) in clickMovieData.actors.actor" 
+              v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
+                  <span class="krNm">{{ actorName.actorNm }} </span>
+                  <br/>
+                  <span class="enNm">{{ actorName.actorEnNm }}</span> 
+            </div>
+          </div>
 
           <p><a v-bind:href="clickMovieData.kmdbUrl" target="blanket">상세정보</a></p>
       </div><!--.detailBox-->
@@ -142,6 +144,7 @@ export default {
     },
   }
 }
+
 </script>
 
 <style>

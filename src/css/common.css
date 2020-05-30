@@ -80,6 +80,15 @@ body{ background-color:gainsboro;  }
 .infromConts > .detailBox > .movieSlogan{ font-weight:600; color:#6b6b6b; }
 .infromConts > .detailBox > .movieStory{ line-height:25px; margin:30px 0;  font-size:15px; color:#6b6b6b; }
 
+.infromConts > .detailBox > .movieStlls{ outline:1px solid red; overflow:scroll; }
+.infromConts > .detailBox > .movieStlls > div{ outline:1px solid blue; width:20%;  display:inline-block; }
+.infromConts > .detailBox > .movieStlls > div > img{ outline:1px solid lime; margin: auto; display:block; }
+
+.infromConts > .detailBox > .movieActor{ padding:20px; }
+.infromConts > .detailBox > .movieActor > div{ border-bottom:1px solid #353434; width:20%; height:70px; margin:0 0 10px; padding:10px 0; float:left; }
+.infromConts > .detailBox > .movieActor > div > .krNm{ font-size:15px;  }
+.infromConts > .detailBox > .movieActor > div > .enNm{ font-size:13px; color:#6b6b6b; }
+
 
 
 
