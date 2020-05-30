@@ -9,51 +9,21 @@
             <!-- v-if를 줘서 영화 데이터가 존재할 때만 영화 정보 박스(.movies)를 보이게 함. + movieResult속에 있는 데이터들 사용하려면 적어줘야함.(왜그런지는 모르겠다..) -->
             <div 
                 class="movieBox"
-                v-for="(movie, index) in movieResult " v-bind:key="index" >
+                v-for="(movie, index) in movieResult " 
+                v-bind:key="index"
+            >
                 <div class="imgTitle" @click="moveInform(movie)">
                     <img                     
                         v-bind:src="posterURL(movie.posters)" 
-                        v-bind:alt="textEdit(movie.title)"/>
-
-                    <!-- title의 불필요한 글자 삭제해줌. -->
-                    <!-- <p>제목: {{ movie.title.replace(/!HS|!HE/g, '') }}</p> -->
-                    <!-- <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p> -->
+                        v-bind:alt="textEdit(movie.title)"
+                    />
 
                     <div class="hoverBox">
-                        <p>제목: {{ textEdit(movie.title) }} ( {{ movie.prodYear }} )</p>
-                        <p>감독: {{ textEdit(movie.directors.director[0].directorNm) }}</p>
+                        <p class="title">{{ textEdit(movie.title) }}<br/>( {{ movie.prodYear }} )</p>
+                        <p class="director">감독: {{ textEdit(movie.directors.director[0].directorNm) }}</p>
                         <p class="story" v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</p>
                     </div>
                 </div>
-                
-
-
-
-                <!-- <ul class="textData">
-                    <li v-if="movie.genre !== ''">장르: {{ movie.genre }}</li>
-                    <li v-if="movie.directors.director[0].directorNm !== ''">감독: {{ textEdit(movie.directors.director[0].directorNm) }}</li>
-                    <li v-if="movie.actors.actor[0].actorNm !== ''">배우: 
-                        <span 
-                            v-for="actorName in movie.actors.actor" 
-                            v-bind:key="actorName.actorId">
-                                {{ actorName.actorNm }}, 
-                        </span> 
-                    </li>
-                    <li v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</li>
-                    <li><a v-bind:href="movie.kmdbUrl" target="blanket">상세정보</a></li>
-                </ul> -->
-
-
-                    <!-- <br/><br/>
-                    - 영화 포스터 주소 전체
-                    {{ movie.posters }} 
-                    <br/><br/>
-                    - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.('g'철자로 자름.)
-                    {{ movie.posters.substring(0, movie.posters.indexOf(movie.posters.match(/g/i)) + 1) }}
-                    <br/><br/>
-                    - 영화 포스터 여러개의 주소가 있을 경우 처음 주소만 추출.('|'기호로 자름.)
-                    {{ posterURL(movie.posters) }}
-                    <br/><br/> -->
             </div><!--.movieBox-->
         </div><!--.movies-->
 

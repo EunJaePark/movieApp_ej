@@ -17,11 +17,13 @@
               <span>{{ clickMovieData.nation }}</span>
             </div><!--.other1-->
             <div class="other2">
-              <span>{{ clickMovieData.repRlsDate }}</span>
+              <span>{{ `${dateEdit(clickMovieData.repRlsDate)} 개봉` }}</span>
               <span>{{ clickMovieData.runtime }}분</span>
               <span>{{ clickMovieData.rating }}</span>
             </div><!--.other2-->
             <p v-if="clickMovieData.directors.director[0].directorNm !== ''">(감독) {{ textEdit(clickMovieData.directors.director[0].directorNm) }}</p>
+
+            <a v-bind:href="clickMovieData.kmdbUrl" target="blanket">영화 상세정보</a>
           </div><!--.otherData-->
           <br/>
           <!-- <p>영상url: {{ clickMovieData.vods.vod[0].vodUrl }}</p>
@@ -56,16 +58,16 @@
             {{ storyEdit(clickMovieData.plots.plot[0].plotText) }}
           </p>
           
-            {{ photoIndex(clickMovieData.stlls) }}
-          <div class="movieStlls">
-            <!-- <P style="width:100%; overflow:scroll;">스틸컷url: {{ clickMovieData.stlls }}</P> -->
+          <div class="movieStlls" v-if="clickMovieData.stlls">
+            <p>{{ `${photoIndex(clickMovieData.stlls)}장의 스틸컷` }}</p>
             <div  v-for="(photo, imgIndex) in photoIndex(clickMovieData.stlls)" :key="imgIndex" >
               <img :src="stllImgURL(clickMovieData.stlls, imgIndex)" alt="" />
-              {{ imgIndex }}
+              <!-- {{ imgIndex }} -->
             </div>
           </div>
 
           <div class="movieActor clear" v-if=" clickMovieData.actors.actor[0].actorNm">
+            <p>출연 / 스탭</p>
             <div
               v-for="(actorName, index) in clickMovieData.actors.actor" 
               v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
@@ -75,7 +77,7 @@
             </div>
           </div>
 
-          <p><a v-bind:href="clickMovieData.kmdbUrl" target="blanket">상세정보</a></p>
+          <!-- <p><a v-bind:href="clickMovieData.kmdbUrl" target="blanket">상세정보</a></p> -->
       </div><!--.detailBox-->
       
       <br/>
@@ -110,6 +112,13 @@ export default {
       }else if(url.indexOf('|')) {   // url이 2개 이상일 경우  
         return url.substring(0, url.indexOf('|')); 
       } 
+    },
+    // 영화 개봉일자 편집.
+    dateEdit(date) {
+      return date.replace(/(\d{4})(\d{2})(\d{2})/, '$1.$2.$3');
+      // \d : 숫자 문자가 아닌 문자에 대응된다. [^0-9]와 동일하다.
+      // {n} : 앞 표현식이 n번 나타나는 부분에 대응된다. n은 반드시 양의 정수여야 한다.
+      // 즉, \d{4}는 앞에서 4번째까지의 [0-9]까지 해당하는 숫자를 지칭하게 되는 것이다.
     },
     // 줄거리 중 제일 앞 문장만 추출.
     sloganEdit(story) {
