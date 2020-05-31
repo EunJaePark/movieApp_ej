@@ -8,18 +8,30 @@
                 v-model="check" v-bind:value="'titleCK'" />
             제목
         </label>
+        <label v-bind:class="{'checkStyle': check === 'actorCK'}">
+            <input 
+                type="radio" name="search" 
+                v-model="check" v-bind:value="'actorCK'" />
+            배우
+        </label>
         <label v-bind:class="{'checkStyle': check === 'directorCK'}">
             <input 
                 type="radio" name="search" 
                 v-model="check" v-bind:value="'directorCK'" />
-            감독이름
+            감독
         </label>
-        <label v-bind:class="{'checkStyle': check === 'keyCK'}">
+        <label v-bind:class="{'checkStyle': check === 'nationCK'}">
             <input 
                 type="radio" name="search" 
-                v-model="check" v-bind:value="'keyCK'" />
-            키워드 ( ex) 액션, 행복.. )
+                v-model="check" v-bind:value="'nationCK'" />
+            국가별
         </label>
+        <!-- <label v-bind:class="{'checkStyle': check === 'genreCK'}">
+            <input 
+                type="radio" name="search" 
+                v-model="check" v-bind:value="'genreCK'" />
+            장르
+        </label> -->
       </form>
 
       <form class="inputBox" @submit="titleSend" >
@@ -28,14 +40,31 @@
             v-model="searchText" 
             v-if="check === 'titleCK'"/>
         <input 
+            class="title" type="text" placeholder="배우 이름을 입력하세요" 
+            v-model="searchText" v-if="check === 'actorCK'" />
+        <input 
             class="title" type="text" placeholder="감독 이름을 입력하세요" 
             v-model="searchText" v-if="check === 'directorCK'" />
         <input 
-            class="title" type="text" placeholder="키워드를 입력하세요" 
-            v-model="searchText" v-if="check === 'keyCK'" />
+            class="title" type="text" placeholder="국가를 입력하세요" 
+            v-model="searchText" v-if="check === 'nationCK'" />
+        <!-- <input 
+            class="title" type="text" placeholder="장르를 입력하세요" 
+            v-model="searchText" v-if="check === 'genreCK'" /> -->
 
         <button>입력</button>
       </form> 
+
+      <form class="genreBtn" @click="btnSearch" v-bind:value="'genreCK'">
+          <button type="submit" @click="searchText = '액션'">액션</button>
+          <button type="submit" @click="searchText = 'SF'">SF</button>     
+          <button type="submit" @click="searchText = '코미디'">코미디</button>
+          <button type="submit" @click="searchText = '드라마'">드라마</button>
+          <button type="submit" @click="searchText = '로맨스'">로맨스</button>
+          <button type="submit" @click="searchText = '역사'">역사</button>
+          <button type="submit" @click="searchText = '애니메이션'">애니메이션</button>
+          <button type="submit" @click="searchText = '다큐멘터리'">다큐멘터리</button>
+      </form>
 
       <!-- <p>해당하는 영화가 없습니다.</p> -->
   </div>
@@ -73,6 +102,24 @@ export default {
             // input창 비워줌.
             this.searchText = '';
         },
+        btnSearch() {
+            // (영화검색명 + 체크박스상태)를 MovieConts로 보내기 위함.(main.js에 작성해놓은 이벤트버스)
+            eventbus.passSearchTxt(this.searchText, this.check);
+            // router이동 주소 보내줌.
+            this.$router.push('/movie');
+
+            const searchTxt = {
+                searchTxt : this.searchText, 
+                check : this.check
+            };
+            console.log(searchTxt);
+            
+            // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
+            this.$store.commit('STATE_UTL', searchTxt);
+
+            // input창 비워줌.
+            this.searchText = '';
+        }
     }
 }
 </script>
