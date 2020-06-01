@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import { movieTitle, movieDirector, movieActor, movieNation, /*movieGenre */ } from '../api/index'
+import { movieTitle, movieDirector, movieActor, movieNation, movieGenre, movieKeyword  } from '../api/index'
 
 Vue.use(Vuex)
 
@@ -79,18 +79,32 @@ export default new Vuex.Store({
           
         }) 
       }
-      // // 검색단어가 '장르'일 경우
-      // else if(data.check === 'genreCK') {
-      //   return movieGenre(data.searchTxt)
-      //   .then(res => {
-      //     context.commit('SET_URL', res.data)
-      //     return res;
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
+      // 검색단어가 '장르'일 경우
+      else if(data.check === 'genreCK') {
+        return movieGenre(data.searchTxt)
+        .then(res => {
+          context.commit('SET_URL', res.data)
+          return res;
+        })
+        .catch(err => {
+          console.log(err);
           
-      //   }) 
-      // }
+        }) 
+      }
+      // 검색단어가 '키워드'일 경우
+      else if(data.check === 'keywordCK') {
+        console.log('keywordCK잘 전달됬다!!!store로!!!');
+        
+        return movieKeyword(data.searchTxt)
+        .then(res => {
+          context.commit('SET_URL', res.data)
+          return res;
+        })
+        .catch(err => {
+          console.log(err);
+          
+        }) 
+      }
     },
     // // 클릭한 poster의 영화 id 넘겨줌.
     // MOVIE_CLICK(context, movie) {

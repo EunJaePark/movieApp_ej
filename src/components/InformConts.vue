@@ -57,6 +57,16 @@
             v-if="clickMovieData.plots.plot[0].plotText !== ''">
             {{ storyEdit(clickMovieData.plots.plot[0].plotText) }}
           </p>
+
+          <div class="movieKeyword" v-if="clickMovieData.keywords">
+            <form @click="btnSearch('keywordCK')">
+              <button 
+                v-for="(keyword, keywordIndex) in keywordNum(clickMovieData.keywords)" :key="keywordIndex"
+                @click="searchText = keyWord(clickMovieData.keywords, keywordIndex)">
+                {{ `# ${keyWord(clickMovieData.keywords, keywordIndex)}` }}
+              </button>
+            </form>
+          </div>
           
           <div class="movieStlls" v-if="clickMovieData.stlls">
             <p>{{ `${photoIndex(clickMovieData.stlls)}장의 스틸컷` }}</p>
@@ -77,6 +87,7 @@
             </div>
           </div>
 
+
           <!-- <p><a v-bind:href="clickMovieData.kmdbUrl" target="blanket">상세정보</a></p> -->
       </div><!--.detailBox-->
       
@@ -91,6 +102,8 @@ export default {
   data() {
     return {
       imgIndex: 0,
+      keywordIndex: 0,
+      searchText: '',
     }
   },
   computed: {
@@ -128,17 +141,30 @@ export default {
     storyEdit(story) {
       return story.substring(story.indexOf('!')+1, story.length)
     },
+    // keyword 개수 구함.
+    keywordNum(key) {
+      if(key === '') {
+        return this.keywordIndex = 0;
+      } else if(key.indexOf(',') === -1) {
+        return this.keywordIndex = 1;
+      } else if(key.indexOf(',')) {
+        return this.keywordIndex = key.match(/,/g).length + 1;
+      } 
+    },
+    // keyword하나씩 넣어줌.
+    keyWord(key, index) {
+      if(key === '') return;
+      else if(key.indexOf(',') === -1) return key;
+      else if(key.indexOf(',')) return key.split(',')[index];
+    },
     // 스틸컷 img 개수 세는 함수.
     photoIndex(photoUrl) {
       if(photoUrl === '') {
-        this.imgIndex = 0;
-        return 0;
-      } else if(photoUrl.indexOf('|') === -1) {
-        this.imgIndex = 1;
-        return 1;
+        return this.imgIndex = 0;
+      } else if(photoUrl.indexOf('|') === -1) {     
+        return this.imgIndex = 1;
       } else if(photoUrl.indexOf('|')) { // http의 개수에 따라 v-for이용해 이미지 태그 생성.
-        this.imgIndex = photoUrl.match(/http/g).length;
-        return photoUrl.match(/http/g).length;
+        return this.imgIndex = photoUrl.match(/http/g).length;
       }
     },
     stllImgURL(url, index) {            
@@ -151,6 +177,24 @@ export default {
         return url.split('|')[index];  // split를 이용해 '|'를 기준으로 url을 나눔. 그 뒤에 각 index에 맞는 사진url을 return.
       } 
     },
+
+    // keyword 클릭하면 해당 키워드별 영화목록 보이게 함.
+    btnSearch(check) {
+      // router이동 주소 보내줌.
+      this.$router.push('/movie');
+
+      const searchTxt = {
+        searchTxt : this.searchText, 
+        check : check,
+      };
+      console.log(searchTxt);
+            
+      // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
+      this.$store.commit('STATE_UTL', searchTxt);
+
+      // input창 비워줌.
+      this.searchText = '';
+    }
   }
 }
 

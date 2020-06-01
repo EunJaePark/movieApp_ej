@@ -11,9 +11,9 @@ body{ background-color:gainsboro;  }
 
 
 /* ----------MainConts---------- */
-.mainConts{ margin:50px auto 0; width:500px; }
-.mainConts > .checkbox{  width:400px; margin:0 auto; }
-.mainConts > .checkbox > label{ border:2px solid #353434; margin:0 10px 30px; padding:5px 10px; color:#353434; display:inline-block; cursor:pointer; }
+.mainConts{ margin:200px auto 0; width:500px; }
+.mainConts > .checkbox{  width:400px; margin:0 auto; display:flex; justify-content: center; }
+.mainConts > .checkbox > label{ border:2px solid #353434; margin:0 10px 30px; padding:5px 10px; color:#353434; cursor:pointer; }
 .mainConts > .checkbox > label > input{ outline:2px solid orange; display:none; }
 .mainConts > .checkbox > .checkStyle{ background-color:#353434; color:gainsboro; }
 
@@ -24,7 +24,7 @@ body{ background-color:gainsboro;  }
 .mainConts > .inputBox > button:hover{ color:gainsboro; background-color:#353434; }
 .mainConts > .inputBox > button:focus{ outline:none; }
 
-.mainConts > .genreBtn{ margin-top:150px; }
+.mainConts > .genreBtn{ margin-top:50px; }
 .mainConts > .genreBtn > button{ border:none; border-radius:3px; width:21%; height:40px; margin:20px 2%; font-size:15px; background-color:rgba(53, 52, 52, .1); }
 .mainConts > .genreBtn > button:hover{ color:gainsboro; background-color:#353434; }
 
@@ -82,6 +82,9 @@ body{ background-color:gainsboro;  }
 .infromConts > .detailBox{ outline:px solid lightskyblue; margin-top:50px; }
 .infromConts > .detailBox > .movieSlogan{ font-weight:600; color:#6b6b6b; }
 .infromConts > .detailBox > .movieStory{ line-height:25px; margin:30px 0 50px;  font-size:15px; color:#6b6b6b; }
+
+.infromConts > .detailBox > .movieKeyword{ margin-bottom:50px; }
+.infromConts > .detailBox > .movieKeyword > form > button{ border:2px solid #353434; margin:3px 5px; padding:2px 5px;  background-color:transparent; }
 
 .infromConts > .detailBox > .movieStlls{ border-top:3px solid #d6d5d5;  padding:50px 0; overflow:scroll; }
 .infromConts > .detailBox > .movieStlls > p{ padding:0 20px 20px; font-size:17px; }

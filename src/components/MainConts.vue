@@ -55,15 +55,15 @@
         <button>입력</button>
       </form> 
 
-      <form class="genreBtn" @click="btnSearch" v-bind:value="'genreCK'">
-          <button type="submit" @click="searchText = '액션'">액션</button>
-          <button type="submit" @click="searchText = 'SF'">SF</button>     
-          <button type="submit" @click="searchText = '코미디'">코미디</button>
-          <button type="submit" @click="searchText = '드라마'">드라마</button>
-          <button type="submit" @click="searchText = '로맨스'">로맨스</button>
-          <button type="submit" @click="searchText = '역사'">역사</button>
+      <form class="genreBtn" @click="btnSearch('genreCK')" v-bind:value="'genreCK'">
           <button type="submit" @click="searchText = '애니메이션'">애니메이션</button>
-          <button type="submit" @click="searchText = '다큐멘터리'">다큐멘터리</button>
+          <button type="submit" @click="searchText = '역사'">역사</button>
+          <button type="submit" @click="searchText = '코메디'">코미디</button>
+          <button type="submit" @click="searchText = '드라마'">드라마</button>
+          <button type="submit" @click="searchText = 'SF'">SF</button>     
+          <button type="submit" @click="searchText = '재난'">재난영화</button>
+          <button type="submit" @click="searchText = '액션'">액션</button>
+          <button type="submit" @click="searchText = '로맨스'">로맨스</button>
       </form>
 
       <!-- <p>해당하는 영화가 없습니다.</p> -->
@@ -102,15 +102,13 @@ export default {
             // input창 비워줌.
             this.searchText = '';
         },
-        btnSearch() {
-            // (영화검색명 + 체크박스상태)를 MovieConts로 보내기 위함.(main.js에 작성해놓은 이벤트버스)
-            eventbus.passSearchTxt(this.searchText, this.check);
+        btnSearch(check) {
             // router이동 주소 보내줌.
             this.$router.push('/movie');
 
             const searchTxt = {
                 searchTxt : this.searchText, 
-                check : this.check
+                check : check,
             };
             console.log(searchTxt);
             
