@@ -52,10 +52,15 @@
             class="title" type="text" placeholder="장르를 입력하세요" 
             v-model="searchText" v-if="check === 'genreCK'" /> -->
 
-        <button>입력</button>
+        <button>검색</button>
       </form> 
 
       <form class="genreBtn" @click="btnSearch('genreCK')" v-bind:value="'genreCK'">
+          <p>
+              <span># genre</span> 
+              <span># 장르별</span>
+              <span>모아보기!</span>
+          </p>
           <button type="submit" @click="searchText = '애니메이션'">애니메이션</button>
           <button type="submit" @click="searchText = '역사'">역사</button>
           <button type="submit" @click="searchText = '코메디'">코미디</button>
@@ -69,6 +74,7 @@
       <!-- <p>해당하는 영화가 없습니다.</p> -->
   </div>
 </template>
+
 
 <script>
 import { eventbus } from '../main';

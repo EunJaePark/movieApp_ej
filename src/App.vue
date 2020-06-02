@@ -7,6 +7,8 @@
   </div>
 </template>
 
+<!--<script src="https://kit.fontawesome.com/aa7a88800a.js" crossorigin="anonymous"></script>-->
+
 <script>
 import AppHeader from './components/AppHeader';
 import MainPage from './views/MainPage';

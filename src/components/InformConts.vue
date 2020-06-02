@@ -81,9 +81,9 @@
             <div
               v-for="(actorName, index) in clickMovieData.actors.actor" 
               v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
-                  <span class="krNm">{{ actorName.actorNm }} </span>
+                  <span class="krNm">{{ actorEdit(actorName.actorNm) }} </span>
                   <br/>
-                  <span class="enNm">{{ actorName.actorEnNm }}</span> 
+                  <span class="enNm">{{ actorEdit(actorName.actorEnNm) }}</span> 
             </div>
           </div>
 
@@ -176,6 +176,11 @@ export default {
       } else if(url.indexOf('|')) {   // url이 2개 이상일 경우  
         return url.split('|')[index];  // split를 이용해 '|'를 기준으로 url을 나눔. 그 뒤에 각 index에 맞는 사진url을 return.
       } 
+    },
+    // 배우 이름에 !HE, !HS 제거해줌.
+    actorEdit(name) {
+      if(name.match(/!HE | !HS/gi)) return name.replace(/!HE | !HS/g, '');
+      else return name;
     },
 
     // keyword 클릭하면 해당 키워드별 영화목록 보이게 함.

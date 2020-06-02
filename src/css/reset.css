@@ -2,15 +2,16 @@
 
 html,
 body {
-	min-width:800px;
+	min-width:400px;
 	height: 100%;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	color: #353434;
+	color:rgba(255, 255, 255, .6);
 	vertical-align: baseline;
+	background:radial-gradient(#203248, #1d1d1c);
 }
 
 h1,
@@ -39,11 +40,17 @@ button {
 	font-size: 90%;
 	margin: 0;
 	cursor: pointer;
+	color:rgba(255, 255, 255, .7);
+}
+
+a, input{
+	color:rgba(255, 255, 255, .6);
 }
 
 *,
 *:after,
 *:before {
 	box-sizing: border-box;
+	margin:0; padding:0;
     font-family: 'Noto Sans KR', sans-serif;
 }

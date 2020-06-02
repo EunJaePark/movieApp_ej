@@ -1,11 +1,18 @@
 <template>
   <div class="movieConts">
-    <button class="gomainBtn" @click.prevent="goMain">← 다시 검색하기</button>
+    <button class="gomainBtn" @click.prevent="goMain">
+        <span class="arrow">← </span> 
+        <span class="text"> 검색 페이지로</span>
+    </button>
       <!-- 검색한 단어 출력 -->
     <h2>" {{ moviedata.KMAQuery }} "</h2>
+    <div class="movieNumBox">
+        <p>총 {{ movieNum(moviedata.TotalCount) }}개의 영화가 검색되었습니다.</p>
+        <p>( 오른쪽으로 스크롤 하면 순서대로 모든 영화 목록을 볼 수 있습니다. )</p>
+    </div>
 
     <div class="dataBox clear">
-        <div class="movies" v-if="movieResult"> 
+        <div class="movies clear" v-if="movieResult"> 
             <!-- v-if를 줘서 영화 데이터가 존재할 때만 영화 정보 박스(.movies)를 보이게 함. + movieResult속에 있는 데이터들 사용하려면 적어줘야함.(왜그런지는 모르겠다..) -->
             <div 
                 class="movieBox"
@@ -19,11 +26,16 @@
                     />
 
                     <div class="hoverBox">
-                        <p class="title">{{ textEdit(movie.title) }}<br/>( {{ movie.prodYear }} )</p>
+                        <!-- <p class="title">{{ textEdit(movie.title) }}<br/>( {{ movie.prodYear }} )</p> -->
                         <p class="director">감독: {{ textEdit(movie.directors.director[0].directorNm) }}</p>
                         <p class="story" v-if="movie.plots.plot[0].plotText !== ''">줄거리: {{ movie.plots.plot[0].plotText }}</p>
                     </div>
                 </div>
+
+                <p class="title">
+                    <span>{{ textEdit(movie.title) }}</span>
+                    <span class="year">( {{ movie.prodYear }} )</span>
+                </p>
             </div><!--.movieBox-->
         </div><!--.movies-->
 
@@ -73,6 +85,11 @@ export default {
 
     },
     methods: {
+        //movie검색 결과 개수가 총 100개 이상일 경우 개수안내표시를 100까지만 나타냄.
+        movieNum(num) {
+            if(num <= 100) return num;
+            else if(num > 100) return 100;
+        },
         // poster url 편집.(url이 두개 이상일 경우 첫번째 url만 추출)
         posterURL(url) {            
             if(url === '') {   // url이 없을 경우
