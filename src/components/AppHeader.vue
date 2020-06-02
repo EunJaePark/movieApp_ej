@@ -1,6 +1,6 @@
 <template>
   <div class="appHeader">
-      <button @click.prevent="goMain">Movie App (스터디용)</button>
+      <button @click.prevent="goMain">Movie App_ej</button>
   </div>
 </template>
 
