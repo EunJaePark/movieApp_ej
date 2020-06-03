@@ -7,6 +7,8 @@
     <link rel="icon" href="<%= BASE_URL %>favicon.ico">
     <title><%= htmlWebpackPlugin.options.title %></title>
 
+    <!-- 배포 후 blocked에러 생겨서 메타 태그 하나 추가해봄. -->
+    <!-- 그 결과 에러는 안뜨는데 여전히 데이터 연결이 되지 않는것 같다.  -->
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"> 
 
   </head>
