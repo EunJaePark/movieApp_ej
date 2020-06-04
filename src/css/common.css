@@ -31,8 +31,9 @@
 
 /* ----------MovieConts---------- */
 .movieConts{ width:100%; padding:0px 50px; }
-.movieConts > h2{ margin:20px 0; text-align:center; }
-.movieConts > .movieNumBox{ margin-top:100px; margin-left:10px; }
+.movieConts > h2{ border-bottom:1px solid rgba(255, 255, 255, .2); height:50px; margin:20px 0; padding:5px 20px 5px 40px; text-align:center; display:inline-block; position:absolute; top:150px; left:50%; transform:translateX(-50%); }
+.movieConts > h2:before{ content:''; display:block; width:15px; height:15px; background-image:url('../assets/search_icon.png'); background-size:cover; opacity:.3; position:absolute; left:10px; top:18px; }
+.movieConts > .movieNumBox{ margin-top:150px; margin-left:10px;  }
 .movieConts > .movieNumBox > p + p{ margin-top:10px; font-size:13px; }
 .movieConts > .gomainBtn{ border:1px solid rgba(255, 255, 255, .3); padding:3px 10px; color:rgba(255, 255, 255, .5); background-color:transparent; }
 .movieConts > .gomainBtn:focus{ outline:none; }
@@ -111,4 +112,11 @@
     .mainConts{ width:350px; }
     .mainConts > .checkbox > label{ padding:5px; }
     .mainConts > .genreBtn > button{ font-size:13px;}
+
+
+    /* ----------MovieConts---------- */
+    .movieConts > h2{ width:100%; margin-top:50px; position:static; transform:translateX(0); }
+    .movieConts > .movieNumBox{ margin-top:90px; }
 }
+
+
