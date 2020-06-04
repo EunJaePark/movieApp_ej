@@ -11,36 +11,24 @@
             <h2>{{ textEdit(clickMovieData.title) }} ( {{ clickMovieData.prodYear }} )</h2>
             <p class="engTitle">{{ clickMovieData.titleEng }}</p>
           </div><!--.title-->
-          <div class="otherData">
-            <div class="other1">
+          <div class="textBox">
+            <div class="textList">
               <span>{{ clickMovieData.genre }}</span>
               <span>{{ clickMovieData.nation }}</span>
-            </div><!--.other1-->
-            <div class="other2">
+            </div><!--.textInform-->
+            <div class="textList">
               <span>{{ `${dateEdit(clickMovieData.repRlsDate)} 개봉` }}</span>
               <span>{{ clickMovieData.runtime }}분</span>
               <span>{{ clickMovieData.rating }}</span>
-            </div><!--.other2-->
+            </div><!--.textInform-->
             <p v-if="clickMovieData.directors.director[0].directorNm !== ''">(감독) {{ textEdit(clickMovieData.directors.director[0].directorNm) }}</p>
 
             <a v-bind:href="clickMovieData.kmdbUrl" target="blanket">영화 상세정보</a>
-          </div><!--.otherData-->
+          </div><!--.textBox-->
           <br/>
           <!-- <p>영상url: {{ clickMovieData.vods.vod[0].vodUrl }}</p>
           <video :src="clickMovieData.vods.vod[0].vodUrl"></video> -->
           <br/>
-          <!-- <p>감독: {{ textEdit(clickMovieData.directors.director[0].directorNm) }}</p>
-          <ul class="textData">
-              <li v-if="clickMovieData.genre !== ''">장르: {{ clickMovieData.genre }}</li>
-              <li v-if="clickMovieData.directors.director[0].directorNm !== ''">감독: {{ textEdit(clickMovieData.directors.director[0].directorNm) }}</li>
-              <li v-if="clickMovieData.actors.actor[0].actorNm !== ''">배우: 
-                <span 
-                  v-for="actorName in clickMovieData.actors.actor" 
-                  v-bind:key="actorName.actorId">
-                    {{ actorName.actorNm }}, 
-                </span> 
-              </li>
-          </ul> -->
         </div><!--.summaryBox-->
       </div><!--.topData-->
 

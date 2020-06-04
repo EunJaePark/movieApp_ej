@@ -74,14 +74,11 @@
 .infromConts > .topData > .summaryBox > .title{ outline:0px solid pink; margin-bottom:20px; }
 .infromConts > .topData > .summaryBox > .title > h2{ font-size:18px; font-weight:400; }
 .infromConts > .topData > .summaryBox > .title > .engTitle{ font-size:13px; color:#6b6b6b; }
-.infromConts > .topData > .summaryBox > .otherData{ outline:0px solid orange; font-size:14px; }
-.infromConts > .topData > .summaryBox > .otherData > .other1,
-.infromConts > .topData > .summaryBox > .otherData > .other2{ margin:5px 0; }
-.infromConts > .topData > .summaryBox > .otherData > .other1 > span + span,
-.infromConts > .topData > .summaryBox > .otherData > .other2 > span + span{ margin-left:12px; }
-.infromConts > .topData > .summaryBox > .otherData > .other1 > span + span:before,
-.infromConts > .topData > .summaryBox > .otherData > .other2 > span + span:before{ content:''; display:inline-block; border-left:1px solid #c2c1c1; width:0px; height:13px; padding-right:12px;  }
-.infromConts > .topData > .summaryBox > .otherData > a{ margin-top:10px; color:#fac61c; /*color:#206de0;*/ display:inline-block; } /* 상세정보 링크 */
+.infromConts > .topData > .summaryBox > .textBox{ outline:0px solid orange; font-size:14px; }
+.infromConts > .topData > .summaryBox > .textBox > .textList{ margin:5px 0; }
+.infromConts > .topData > .summaryBox > .textBox > .textList > span + span{ margin-left:12px; }
+.infromConts > .topData > .summaryBox > .textBox > .textList > span + span:before{ content:''; display:inline-block; border-left:1px solid #c2c1c1; width:0px; height:13px; padding-right:12px;  }
+.infromConts > .topData > .summaryBox > .textBox > a{ margin-top:10px; color:#fac61c; /*color:#206de0;*/ display:inline-block; } /* 상세정보 링크 */
 
 .infromConts > .detailBox{ outline:0px solid lightskyblue; margin-top:50px; }
 .infromConts > .detailBox > .movieSlogan{ font-weight:600;  }
