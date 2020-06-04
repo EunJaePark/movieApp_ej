@@ -117,6 +117,12 @@
     /* ----------MovieConts---------- */
     .movieConts > h2{ width:100%; margin-top:50px; position:static; transform:translateX(0); }
     .movieConts > .movieNumBox{ margin-top:90px; }
+
+
+    /* ----------InformConts---------- */
+    .infromConts > .topData > .summaryBox{ width:100%; margin:30px 0 0; }
+    .infromConts > .detailBox > .movieStlls > div{  width:28%; margin:10px 2%; }
+    .infromConts > .detailBox > .movieActor > div{ width:33%; }
 }
 
 
