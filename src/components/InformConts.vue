@@ -178,7 +178,7 @@ export default {
       this.$router.push('/movie');
 
       const searchTxt = {
-        searchTxt : this.searchText, 
+        searchTxt : `keyword=${this.searchText}`, 
         check : check,
       };
       console.log(searchTxt);
