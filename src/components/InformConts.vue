@@ -99,6 +99,7 @@ export default {
       return this.$store.state.clickMovie;
     }
   },
+  
   methods: {
     textEdit(text) {
       // 검색어를 나타내는 !HE, !HS글자 삭제.

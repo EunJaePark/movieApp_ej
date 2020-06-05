@@ -1,15 +1,18 @@
 <template>
   <div>
-      <MainConts></MainConts>
+      <InputSearchForm></InputSearchForm>
+      <GenereSearchBtns></GenereSearchBtns>
   </div>
 </template>
 
 <script>
-import MainConts from '../components/MainConts';
+import InputSearchForm from '../components/search/InputSearchForm';
+import GenereSearchBtns from '../components/search/GenereSearchBtns';
 
 export default {
   components: {
-    MainConts,
+    InputSearchForm,
+    GenereSearchBtns,
   }
 }
 </script>

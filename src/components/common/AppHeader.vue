@@ -5,6 +5,8 @@
 </template>
 
 <script>
+import { deleteCookie } from '../../utils/cookies';
+
 export default {
   methods: {
     goMain() {

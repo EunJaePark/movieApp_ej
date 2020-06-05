@@ -22,10 +22,12 @@
 .mainConts > .inputBox > button:hover{ color:rgba(255, 255, 255, .7);  }
 .mainConts > .inputBox > button:focus{ outline:none; }
 
-.mainConts > .genreBtn{ margin-top:100px; }
-.mainConts > .genreBtn > p > span{ margin:0 5px; }
-.mainConts > .genreBtn > button{ border:none; border-radius:2px; width:21%; height:40px; margin:15px 2%; font-size:15px; background-color:rgba(255, 255, 255, .1); }
-.mainConts > .genreBtn > button:hover{ color:rgba(255, 255, 255, 1); background-color:rgba(255, 255, 255, .5); }
+/* GenereSearhBtns */
+.genreBtnBox{ width:500px; margin:0 auto; }
+.genreBtnBox > .genreBtn{ margin-top:100px; }
+.genreBtnBox > .genreBtn > p > span{ margin:0 5px; }
+.genreBtnBox > .genreBtn > button{ border:none; border-radius:2px; width:21%; height:40px; margin:15px 2%; font-size:15px; background-color:rgba(255, 255, 255, .1); }
+.genreBtnBox > .genreBtn > button:hover{ color:rgba(255, 255, 255, 1); background-color:rgba(255, 255, 255, .5); }
 
 
 

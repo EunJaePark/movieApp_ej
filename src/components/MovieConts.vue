@@ -72,14 +72,14 @@ export default {
         // })
 
         // 이벤트버스 안되서 input페이지에서 바로 state에 넣어준 값 가져옴.
-        console.log(this.$store.state.searchTxt);
-        console.log(this.$store.state.searchTxt.check);
-        console.log(this.$store.state.searchTxt.searchTxt);
+        console.log(this.$store.state.searchTxtBox);
+        console.log(this.$store.state.searchTxtBox.check);
+        console.log(this.$store.state.searchTxtBox.searchTxt);
         // const checkTxt = this.$store.state.searchTxt.check;
         // const inputTxt = this.$store.state.searchTxt.searchTxt;
 
-        const searchTxt = this.$store.state.searchTxt;
-        this.$store.dispatch('FETCH_TITLE', searchTxt);
+        const searchTxtBox = this.$store.state.searchTxtBox;
+        this.$store.dispatch('FETCH_TITLE', searchTxtBox);
 
         // movieData();
 
@@ -121,7 +121,7 @@ export default {
         },
         // poster클릭 시 세부 정보 페이지(InformPage)로 이동.
         moveInform(movie) {
-            this.$store.commit('CLICK_MOVIE', movie);
+            this.$store.commit('CLICK_MOVIE', movie); 
             this.$router.push('/inform');
         }
 
