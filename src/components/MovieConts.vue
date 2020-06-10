@@ -4,8 +4,10 @@
         <span class="arrow">← </span> 
         <span class="text"> 검색 페이지로</span>
     </button>
-      <!-- 검색한 단어 출력 -->
-    <h2>{{ moviedata.KMAQuery }}</h2>
+
+    <!-- 검색한 단어 출력 -->
+    <h2>{{ inputTextEdit(inputText) }}</h2>
+    
     <div class="movieNumBox">
         <p>총 {{ movieNum(moviedata.TotalCount) }}개의 영화가 검색되었습니다.</p>
         <p>( 오른쪽으로 스크롤 하면 순서대로 모든 영화 목록을 볼 수 있습니다. )</p>
@@ -52,6 +54,9 @@ import { eventbus } from '../main';
 
 export default {
     computed: {
+        inputText() {
+            return this.$store.state.searchTxtBox.searchTxt;
+        },
         moviedata() {
             return this.$store.state.moviedata;
         },
@@ -85,6 +90,10 @@ export default {
 
     },
     methods: {
+        // 입력한 검색어 추출.(영화type도 함께 들어있어 검색어만 뽑아냄)
+        inputTextEdit(text) {
+            return text.substring(text.indexOf('=')+1, text.length);
+        },
         //movie검색 결과 개수가 총 100개 이상일 경우 개수안내표시를 100까지만 나타냄.
         movieNum(num) {
             if(num <= 100) return num;

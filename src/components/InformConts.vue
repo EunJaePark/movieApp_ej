@@ -86,6 +86,8 @@
 </template>
 
 <script>
+import { saveValue, saveType, deleteCookie } from '../utils/cookies';
+
 export default {
   data() {
     return {
@@ -177,14 +179,18 @@ export default {
       // router이동 주소 보내줌.
       this.$router.push('/movie');
 
-      const searchTxt = {
+      // 영화검색위해 입력한 검색어 + 검색타입 cookie에 저장해줌.
+      saveValue(`keyword=${this.searchText}`);
+      saveType(this.check); 
+
+      const searchTxtBox = {
         searchTxt : `keyword=${this.searchText}`, 
         check : check,
       };
-      console.log(searchTxt);
+      console.log(searchTxtBox);
             
       // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
-      this.$store.commit('STATE_UTL', searchTxt);
+      this.$store.commit('STATE_UTL', searchTxtBox);
 
       // input창 비워줌.
       this.searchText = '';
