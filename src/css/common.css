@@ -107,7 +107,7 @@
 /* ----------SimilarMovie---------- */
 .similarMovie{ border-top:2px solid rgba(255, 255, 255, .3); width:calc(100% - 40px); max-width:960px; margin:0 auto; padding:60px 20px; }
 .similarMovie > p{  font-size:17px; }
-.similarMovie > span.text{  font-size:13px; display:block; }
+.similarMovie > span.text{ margin-top:5px; font-size:13px; display:block; }
 .similarMovie > span.samekey{ margin-top:50px; padding:2px 5px; font-size:15px; background-color:rgba(255, 255, 255, .2); display:inline-block; }
 .similarMovie > .similarMovieBox{ padding:20px 0; overflow:scroll; display:flex; }
 

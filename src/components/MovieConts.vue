@@ -7,7 +7,7 @@
 
     <!-- 검색한 단어 출력 -->
     <h2>{{ inputTextEdit(inputText) }}</h2>
-    
+
     <div class="movieNumBox">
         <p>총 {{ movieNum(moviedata.TotalCount) }}개의 영화가 검색되었습니다.</p>
         <p>( 오른쪽으로 스크롤 하면 순서대로 모든 영화 목록을 볼 수 있습니다. )</p>
@@ -21,7 +21,7 @@
                 v-for="(movie, index) in movieResult " 
                 v-bind:key="index"
             >
-                <div class="imgTitle" @click="moveInform(movie)">
+                <div class="imgTitle" @click="moveInform(movie, textEdit(movie.title), textEdit(movie.directors.director[0].directorNm), movie.movieSeq)">
                     <img                     
                         v-bind:src="posterURL(movie.posters)" 
                         v-bind:alt="textEdit(movie.title)"
@@ -51,6 +51,7 @@
 
 <script>
 import { eventbus } from '../main';
+import { saveInform } from '../utils/cookies';
 
 export default {
     computed: {
@@ -129,8 +130,19 @@ export default {
             this.$router.push('/main');
         },
         // poster클릭 시 세부 정보 페이지(InformPage)로 이동.
-        moveInform(movie) {
-            this.$store.commit('CLICK_MOVIE', movie); 
+        moveInform(movie, movieID, director, movieSeq) {
+            // InformConts가 새로고침해도 그대로 내용이 남아있도록 하기 위해서, 처음부터 title, director, movieSeq를 cookie와 store에 넘겨줘서 api생성할 수 있도록 한 것이다.
+            // title, director, movieSeq를 하나씩만 해봤더니 다른 영화가 연결되는 경우가 있어서 조건을 3개나 준 것.
+            saveInform(`title=${movieID}&director=${director}&movieSeq=${movieSeq}`);
+            console.log(this.$store.state.movieID);
+
+            const searchTxtBox = {
+                // searchTxt : `movieId=${movieID}`, 
+                searchTxt : `title=${movieID}&director=${director}&movieSeq=${movieSeq}`, 
+            };
+            this.$store.commit('MOVIE_ID', searchTxtBox);
+            
+            // this.$store.commit('CLICK_MOVIE', movie); 
             this.$router.push('/inform');
         }
 

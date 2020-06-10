@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { movieSearch  } from '../api/index'
-import { getValueFromCookie, getTypeFromCookie } from '../utils/cookies';
+import { getValueFromCookie, getTypeFromCookie, getIDFromCookie } from '../utils/cookies';
 
 Vue.use(Vuex)
 
@@ -10,7 +10,7 @@ export default new Vuex.Store({
     moviedata: [],
     // searchTxt: '',
     result: [],
-    clickMovie: [], 
+    // clickMovie: [], 
     searchTxtBox: {
       searchTxt : getValueFromCookie() || '', 
       check : getTypeFromCookie() || ''
@@ -20,6 +20,9 @@ export default new Vuex.Store({
       check : '',
     },
     similarMoviedata: [],
+    movieID: {
+      searchTxt : getIDFromCookie() || '',
+    }
   },
   mutations: {
     SET_URL(state, data) {
@@ -33,8 +36,11 @@ export default new Vuex.Store({
     STATE_UTL(state, searchTxtBox) {
       state.searchTxtBox = searchTxtBox
     },
-    CLICK_MOVIE(state, movie) {
-      state.clickMovie = movie
+    // CLICK_MOVIE(state, movie) {
+    //   state.clickMovie = movie
+    // },
+    MOVIE_ID(state, id) {
+      state.movieID = id
     },
     SIMILAR_MOVIE_API(state, keywordFirstBox) {
       state.keywordFirstBox = keywordFirstBox
@@ -49,6 +55,8 @@ export default new Vuex.Store({
       return movieSearch(data.searchTxt)
       .then(res => {
         context.commit('SET_URL', res.data)
+        console.log(res);
+        
         return res;
       })
       .catch(err => {

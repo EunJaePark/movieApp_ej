@@ -1,29 +1,30 @@
 <template>
-  <div class="infromConts" v-if="clickMovieData">
+  <div class="infromConts" v-if="clickMovieData.Data">
+    <!-- {{ clickMovieData.Data[0].Result[0] }} -->
       <div class="topData clear">
         <img 
           class="poster"                    
-          v-bind:src="posterURL(clickMovieData.posters)" 
-          v-bind:alt="textEdit(clickMovieData.title)"
+          v-bind:src="posterURL(clickMovieData.Data[0].Result[0].posters)" 
+          v-bind:alt="textEdit(clickMovieData.Data[0].Result[0].title)"
         />
         <div class="summaryBox">
           <div class="title">
-            <h2>{{ textEdit(clickMovieData.title) }} ( {{ clickMovieData.prodYear }} )</h2>
-            <p class="engTitle">{{ clickMovieData.titleEng }}</p>
+            <h2>{{ textEdit(clickMovieData.Data[0].Result[0].title) }} ( {{ clickMovieData.Data[0].Result[0].prodYear }} )</h2>
+            <p class="engTitle">{{ clickMovieData.Data[0].Result[0].titleEng }}</p>
           </div><!--.title-->
           <div class="textBox">
             <div class="textList">
-              <span>{{ clickMovieData.genre }}</span>
-              <span>{{ clickMovieData.nation }}</span>
+              <span>{{ clickMovieData.Data[0].Result[0].genre }}</span>
+              <span>{{ clickMovieData.Data[0].Result[0].nation }}</span>
             </div><!--.textInform-->
             <div class="textList">
-              <span>{{ `${dateEdit(clickMovieData.repRlsDate)} 개봉` }}</span>
-              <span>{{ clickMovieData.runtime }}분</span>
-              <span>{{ clickMovieData.rating }}</span>
+              <span>{{ `${dateEdit(clickMovieData.Data[0].Result[0].repRlsDate)} 개봉` }}</span>
+              <span>{{ clickMovieData.Data[0].Result[0].runtime }}분</span>
+              <span>{{ clickMovieData.Data[0].Result[0].rating }}</span>
             </div><!--.textInform-->
-            <p v-if="clickMovieData.directors.director[0].directorNm !== ''">(감독) {{ textEdit(clickMovieData.directors.director[0].directorNm) }}</p>
+            <p v-if="clickMovieData.Data[0].Result[0].directors.director[0].directorNm !== ''">(감독) {{ textEdit(clickMovieData.Data[0].Result[0].directors.director[0].directorNm) }}</p>
 
-            <a v-bind:href="clickMovieData.kmdbUrl" target="blanket">영화 상세정보</a>
+            <a v-bind:href="clickMovieData.Data[0].Result[0].kmdbUrl" target="blanket">영화 상세정보</a>
           </div><!--.textBox-->
           <br/>
           <!-- <p>영상url: {{ clickMovieData.vods.vod[0].vodUrl }}</p>
@@ -36,38 +37,38 @@
         <!-- 한문장의 슬로건(줄거리 중 첫 문장!)-->
         <p 
           class="movieSlogan"
-          v-if="clickMovieData.plots.plot[0].plotText !== ''">
-          {{ sloganEdit(clickMovieData.plots.plot[0].plotText) }}
+          v-if="clickMovieData.Data[0].Result[0].plots.plot[0].plotText !== ''">
+          {{ sloganEdit(clickMovieData.Data[0].Result[0].plots.plot[0].plotText) }}
         </p>
         <!-- 줄거리 -->
           <p
             class="movieStory" 
-            v-if="clickMovieData.plots.plot[0].plotText !== ''">
-            {{ storyEdit(clickMovieData.plots.plot[0].plotText) }}
+            v-if="clickMovieData.Data[0].Result[0].plots.plot[0].plotText !== ''">
+            {{ storyEdit(clickMovieData.Data[0].Result[0].plots.plot[0].plotText) }}
           </p>
 
-          <div class="movieKeyword" v-if="clickMovieData.keywords">
+          <div class="movieKeyword" v-if="clickMovieData.Data[0].Result[0].keywords">
             <form @click="btnSearch('keywordCK')">
               <button 
-                v-for="(keyword, keywordIndex) in keywordNum(clickMovieData.keywords)" :key="keywordIndex"
-                @click="searchText = keyWord(clickMovieData.keywords, keywordIndex)">
-                {{ `# ${keyWord(clickMovieData.keywords, keywordIndex)}` }}
+                v-for="(keyword, keywordIndex) in keywordNum(clickMovieData.Data[0].Result[0].keywords)" :key="keywordIndex"
+                @click="searchText = keyWord(clickMovieData.Data[0].Result[0].keywords, keywordIndex)">
+                {{ `# ${keyWord(clickMovieData.Data[0].Result[0].keywords, keywordIndex)}` }}
               </button>
             </form>
           </div>
           
-          <div class="movieStlls" v-if="clickMovieData.stlls">
-            <p>{{ `${photoIndex(clickMovieData.stlls)}장의 스틸컷` }}</p>
-            <div  v-for="(photo, imgIndex) in photoIndex(clickMovieData.stlls)" :key="imgIndex" >
-              <img :src="stllImgURL(clickMovieData.stlls, imgIndex)" alt="" />
+          <div class="movieStlls" v-if="clickMovieData.Data[0].Result[0].stlls">
+            <p>{{ `${photoIndex(clickMovieData.Data[0].Result[0].stlls)}장의 스틸컷` }}</p>
+            <div  v-for="(photo, imgIndex) in photoIndex(clickMovieData.Data[0].Result[0].stlls)" :key="imgIndex" >
+              <img :src="stllImgURL(clickMovieData.Data[0].Result[0].stlls, imgIndex)" alt="" />
               <!-- {{ imgIndex }} -->
             </div>
           </div>
 
-          <div class="movieActor clear" v-if=" clickMovieData.actors.actor[0].actorNm">
+          <div class="movieActor clear" v-if=" clickMovieData.Data[0].Result[0].actors.actor[0].actorNm">
             <p>출연 / 스탭</p>
             <div
-              v-for="(actorName, index) in clickMovieData.actors.actor" 
+              v-for="(actorName, index) in clickMovieData.Data[0].Result[0].actors.actor" 
               v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
                   <span class="krNm">{{ actorEdit(actorName.actorNm) }} </span>
                   <br/>
@@ -96,7 +97,8 @@ export default {
   },
   computed: {
     clickMovieData() {
-      return this.$store.state.clickMovie;
+      // return this.$store.state.clickMovie;
+      return this.$store.state.moviedata;
     },
     // firstKeywordAPI() {
     //   const keywordFirstBox = {
@@ -111,7 +113,16 @@ export default {
     //   return this.$store.state.similarMoviedata;
     // },
   },
-  created() {
+  created() {   
+    console.log(this.$store.state.movieID);
+    
+    // 영화 상세정보 불러옴.(cookie이용해서 api만들어서 가져올 것임.)
+    const idAPI = this.$store.state.movieID;
+    console.log(idAPI);
+    
+    this.$store.dispatch('FETCH_TITLE', idAPI);
+
+
     //---------------SimilarMovie.vue로 첫 번쨰 키워드와 check 넘겨주기 위한 코드!!!!---------------------
     let key = this.clickMovieData.keywords;
     
@@ -134,6 +145,7 @@ export default {
     this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
     console.log(this.$store.state.keywordFirstBox);
     //-------------------------------------------------------------------------------------------
+
   },
   methods: {
     textEdit(text) {
