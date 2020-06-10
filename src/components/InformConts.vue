@@ -74,9 +74,6 @@
                   <span class="enNm">{{ actorEdit(actorName.actorEnNm) }}</span> 
             </div>
           </div>
-
-
-          <!-- <p><a v-bind:href="clickMovieData.kmdbUrl" target="blanket">상세정보</a></p> -->
       </div><!--.detailBox-->
       
       <br/>
@@ -94,14 +91,50 @@ export default {
       imgIndex: 0,
       keywordIndex: 0,
       searchText: '',
+      keywordFirst: '', // 키워드 중 첫 번째만 추출.(SimilarMovie.vue로 전달할 것)
     }
   },
   computed: {
     clickMovieData() {
       return this.$store.state.clickMovie;
-    }
+    },
+    // firstKeywordAPI() {
+    //   const keywordFirstBox = {
+    //     searchTxt : `keyword=${this.keywordFirst}`, 
+    //     check : keyword,
+    //   }; 
+
+    //   // 바로 state에 겁색어랑 체크박스확인데이터 넣어줘봄.
+    //   this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
+    // },
+    // similarMovies() {
+    //   return this.$store.state.similarMoviedata;
+    // },
   },
+  created() {
+    //---------------SimilarMovie.vue로 첫 번쨰 키워드와 check 넘겨주기 위한 코드!!!!---------------------
+    let key = this.clickMovieData.keywords;
+    
+    if(key === '') return;
+    else if(key.indexOf(',') === -1) {
+      return key;
+    }
+    else if(key.indexOf(',')) {
+      key = key.split(',')[0];
+    }
+    console.log(key);
   
+    const keywordFirstBox = {
+      searchTxt : `keyword=${key}`, 
+      check : 'keyword',
+    }; 
+    
+
+    // 바로 state에 겁색어랑 체크박스확인데이터 넣어줘봄.
+    this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
+    console.log(this.$store.state.keywordFirstBox);
+    //-------------------------------------------------------------------------------------------
+  },
   methods: {
     textEdit(text) {
       // 검색어를 나타내는 !HE, !HS글자 삭제.
@@ -142,11 +175,17 @@ export default {
         return this.keywordIndex = key.match(/,/g).length + 1;
       } 
     },
-    // keyword하나씩 넣어줌.
+    // keyword하나씩 넣어줌. + data의 keywordFirst에 첫 번째 키워드 넣어줌.
     keyWord(key, index) {
       if(key === '') return;
-      else if(key.indexOf(',') === -1) return key;
-      else if(key.indexOf(',')) return key.split(',')[index];
+      else if(key.indexOf(',') === -1) {
+        this.keywordFirst = key;
+        return key;
+      }
+      else if(key.indexOf(',')) {
+        this.keywordFirst = key.split(',')[0];
+        return key.split(',')[index];
+      }
     },
     // 스틸컷 img 개수 세는 함수.
     photoIndex(photoUrl) {
@@ -194,7 +233,8 @@ export default {
 
       // input창 비워줌.
       this.searchText = '';
-    }
+    },
+
   }
 }
 

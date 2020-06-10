@@ -14,7 +14,12 @@ export default new Vuex.Store({
     searchTxtBox: {
       searchTxt : getValueFromCookie() || '', 
       check : getTypeFromCookie() || ''
-    } 
+    } ,
+    keywordFirstBox: {
+      searchTxt : '',
+      check : '',
+    },
+    similarMoviedata: [],
   },
   mutations: {
     SET_URL(state, data) {
@@ -30,7 +35,13 @@ export default new Vuex.Store({
     },
     CLICK_MOVIE(state, movie) {
       state.clickMovie = movie
-    }
+    },
+    SIMILAR_MOVIE_API(state, keywordFirstBox) {
+      state.keywordFirstBox = keywordFirstBox
+    },
+    SIMILAR_MOVIES(state, data) {
+      state.similarMoviedata = data
+    },
   },
   actions: {
     FETCH_TITLE(context, data) {
@@ -38,6 +49,18 @@ export default new Vuex.Store({
       return movieSearch(data.searchTxt)
       .then(res => {
         context.commit('SET_URL', res.data)
+        return res;
+      })
+      .catch(err => {
+        console.log(err);
+          
+      })
+    },
+    KEY_SIMILAR(context, data) {
+      console.log(data);
+      return movieSearch(data.searchTxt)
+      .then(res => {
+        context.commit('SIMILAR_MOVIES', res.data)
         return res;
       })
       .catch(err => {

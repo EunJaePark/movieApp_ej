@@ -69,7 +69,7 @@
 
 
 /* ----------InformConts---------- */
-.infromConts{  max-width:1000px; margin:50px auto;  padding:20px; }
+.infromConts{  max-width:1000px; margin:50px auto 0;  padding:20px; }
 .infromConts > .topData{ outline:0px solid blue; width:100%; }
 .infromConts > .topData > *{ outline:0px solid lime; float:left; }
 .infromConts > .topData > .poster{ width:213px; }
@@ -104,6 +104,36 @@
 
 
 
+/* ----------SimilarMovie---------- */
+.similarMovie{ border-top:2px solid rgba(255, 255, 255, .3); width:calc(100% - 40px); max-width:960px; margin:0 auto; padding:60px 20px; }
+.similarMovie > p{  font-size:17px; }
+.similarMovie > span.text{  font-size:13px; display:block; }
+.similarMovie > span.samekey{ margin-top:50px; padding:2px 5px; font-size:15px; background-color:rgba(255, 255, 255, .2); display:inline-block; }
+.similarMovie > .similarMovieBox{ padding:20px 0; overflow:scroll; display:flex; }
+
+.similarMovie > .similarMovieBox > .movie{ padding-right:60px; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle{ width:193px; height:283px; padding:10px; background-color:rgba(255, 255, 255, .1);  position:relative; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > img{ width:100%; height:100%; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox{ width:100%; height:100%; padding:15px 20px; font-size:14px; color:rgba(255, 255, 255, 1); background-color:rgba(250, 198, 28, .9); position:absolute; top:0; left:0; opacity:0; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox > p.director{ margin:10px 0; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox > p.story{    /* 줄거리 내용 길면 ...으로 줄여줌. */ 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    -webkit-line-clamp:7;
+    -webkit-box-orient: vertical;
+    display:-webkit-box;  }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox > a{ margin-top:15px; cursor:pointer; display:inline-block; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox > a:hover{ color:#fff; text-decoration:underline; }
+.similarMovie > .similarMovieBox > .movie > .imgTitle > .hoverBox:hover{ opacity:1; }
+
+.similarMovie > .similarMovieBox > .movie > .title{  margin-top:15px; }
+.similarMovie > .similarMovieBox > .movie > .title > span{ font-size:15px; display:block; }
+.similarMovie > .similarMovieBox > .movie > .title > span.year{ font-size:13px; color:rgba(255, 255, 255, .3); }
+
+
+
+
 
 @media screen and (max-width:600px) {
     /* ----------AppHeader---------- */
@@ -125,6 +155,7 @@
     .infromConts > .topData > .summaryBox{ width:100%; margin:30px 0 0; }
     .infromConts > .detailBox > .movieStlls > div{  width:28%; margin:10px 2%; }
     .infromConts > .detailBox > .movieActor > div{ width:33%; }
+
 }
 
 
