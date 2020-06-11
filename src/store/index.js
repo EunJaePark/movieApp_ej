@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { movieSearch  } from '../api/index'
-import { getValueFromCookie, getTypeFromCookie, getIDFromCookie } from '../utils/cookies';
+import { getValueFromCookie, getTypeFromCookie, getIDFromCookie, getFirstKey } from '../utils/cookies';
 
 Vue.use(Vuex)
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
       check : getTypeFromCookie() || ''
     } ,
     keywordFirstBox: {
-      searchTxt : '',
+      searchTxt : getFirstKey() || '',
       check : '',
     },
     similarMoviedata: [],

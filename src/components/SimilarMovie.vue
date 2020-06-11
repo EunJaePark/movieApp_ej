@@ -47,8 +47,12 @@ export default {
         },
     },
     created() {
-        // InfomConts.vue에서 store에 저장한 keyword와 check불러와서 api에 넣어줌.
+        console.log(this.keywordFirst);
+        
+        // InfomConts.vue에서 store에 저장한 keyword와 check불러와서 api에 넣어줌. (기존 api구하는 함수 형식에 맞추느라 여러 데이터형식으로 생성함)
         const keywordFirstBox = this.$store.state.keywordFirstBox;
+        console.log(keywordFirstBox);
+        
         this.$store.dispatch('KEY_SIMILAR', keywordFirstBox);
     },
     methods: {

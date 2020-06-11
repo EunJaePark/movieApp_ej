@@ -36,5 +36,15 @@ function getIDFromCookie() {
       '$1',
     );
 } 
+// 첫번째 키워드 cookie에 저장용.(새로고침시 첫번째 키워드 데이터가 사라지기 때문.)
+function saveFirstKey(key) {
+    document.cookie = `firstKey = ${key}`;
+}
+function getFirstKey() {
+    return document.cookie.replace(
+      /(?:(?:^|.*;\s*)firstKey\s*=\s*([^;]*).*$)|^.*$/,
+        '$1',
+    );
+}
 
-export { saveValue, saveType, getValueFromCookie, getTypeFromCookie, deleteCookie, saveInform, getIDFromCookie }
+export { saveValue, saveType, getValueFromCookie, getTypeFromCookie, deleteCookie, saveInform, getIDFromCookie, saveFirstKey, getFirstKey }

@@ -8,6 +8,7 @@
           v-bind:alt="textEdit(clickMovieData.Data[0].Result[0].title)"
         />
         <div class="summaryBox">
+          {{ clickMovieData.Data[0].Result[0].keywords }}
           <div class="title">
             <h2>{{ textEdit(clickMovieData.Data[0].Result[0].title) }} ( {{ clickMovieData.Data[0].Result[0].prodYear }} )</h2>
             <p class="engTitle">{{ clickMovieData.Data[0].Result[0].titleEng }}</p>
@@ -84,7 +85,7 @@
 </template>
 
 <script>
-import { saveValue, saveType, deleteCookie } from '../utils/cookies';
+import { saveValue, saveType, deleteCookie, saveFirstKey } from '../utils/cookies';
 
 export default {
   data() {
@@ -92,7 +93,7 @@ export default {
       imgIndex: 0,
       keywordIndex: 0,
       searchText: '',
-      keywordFirst: '', // 키워드 중 첫 번째만 추출.(SimilarMovie.vue로 전달할 것)
+      key: '', // 키워드 중 첫 번째만 추출.(SimilarMovie.vue로 전달할 것)
     }
   },
   computed: {
@@ -100,18 +101,6 @@ export default {
       // return this.$store.state.clickMovie;
       return this.$store.state.moviedata;
     },
-    // firstKeywordAPI() {
-    //   const keywordFirstBox = {
-    //     searchTxt : `keyword=${this.keywordFirst}`, 
-    //     check : keyword,
-    //   }; 
-
-    //   // 바로 state에 겁색어랑 체크박스확인데이터 넣어줘봄.
-    //   this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
-    // },
-    // similarMovies() {
-    //   return this.$store.state.similarMoviedata;
-    // },
   },
   created() {   
     console.log(this.$store.state.movieID);
@@ -121,30 +110,6 @@ export default {
     console.log(idAPI);
     
     this.$store.dispatch('FETCH_TITLE', idAPI);
-
-
-    //---------------SimilarMovie.vue로 첫 번쨰 키워드와 check 넘겨주기 위한 코드!!!!---------------------
-    let key = this.clickMovieData.keywords;
-    
-    if(key === '') return;
-    else if(key.indexOf(',') === -1) {
-      return key;
-    }
-    else if(key.indexOf(',')) {
-      key = key.split(',')[0];
-    }
-    console.log(key);
-  
-    const keywordFirstBox = {
-      searchTxt : `keyword=${key}`, 
-      check : 'keyword',
-    }; 
-    
-
-    // 바로 state에 겁색어랑 체크박스확인데이터 넣어줘봄.
-    this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
-    console.log(this.$store.state.keywordFirstBox);
-    //-------------------------------------------------------------------------------------------
 
   },
   methods: {
@@ -191,11 +156,11 @@ export default {
     keyWord(key, index) {
       if(key === '') return;
       else if(key.indexOf(',') === -1) {
-        this.keywordFirst = key;
+        // this.keywordFirst = key;
         return key;
       }
       else if(key.indexOf(',')) {
-        this.keywordFirst = key.split(',')[0];
+        // this.keywordFirst = key.split(',')[0];
         return key.split(',')[index];
       }
     },

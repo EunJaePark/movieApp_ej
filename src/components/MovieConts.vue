@@ -21,7 +21,7 @@
                 v-for="(movie, index) in movieResult " 
                 v-bind:key="index"
             >
-                <div class="imgTitle" @click="moveInform(movie, textEdit(movie.title), textEdit(movie.directors.director[0].directorNm), movie.movieSeq)">
+                <div class="imgTitle" @click="moveInform(keyWord(movie.keywords), textEdit(movie.title), textEdit(movie.directors.director[0].directorNm), movie.movieSeq)">
                     <img                     
                         v-bind:src="posterURL(movie.posters)" 
                         v-bind:alt="textEdit(movie.title)"
@@ -51,7 +51,7 @@
 
 <script>
 import { eventbus } from '../main';
-import { saveInform } from '../utils/cookies';
+import { saveInform, saveFirstKey } from '../utils/cookies';
 
 export default {
     computed: {
@@ -87,7 +87,9 @@ export default {
         const searchTxtBox = this.$store.state.searchTxtBox;
         this.$store.dispatch('FETCH_TITLE', searchTxtBox);
 
-        // movieData();
+ 
+        // 첫번째 키워드 빈칸으로 만들어줌.
+        saveFirstKey('');
 
     },
     methods: {
@@ -129,8 +131,22 @@ export default {
         goMain() {
             this.$router.push('/main');
         },
-        // poster클릭 시 세부 정보 페이지(InformPage)로 이동.
-        moveInform(movie, movieID, director, movieSeq) {
+        // keyword하나씩 넣어줌. + data의 keywordFirst에 첫 번째 키워드 넣어줌.
+        keyWord(key) {
+            console.log(key);
+            
+            if(key === '') return;
+            else if(key.indexOf(',') === -1) {
+                // this.keywordFirst = key;
+                return key;
+            }
+            else if(key.indexOf(',')) {
+                // this.keywordFirst = key.split(',')[0];
+                return key.split(',')[0];
+            }
+        },
+        // poster클릭 시 세부 정보 페이지(InformPage)로 이동.(해당 영화의 데이터들도 넘겨줌.)
+        moveInform(keyword, movieID, director, movieSeq) {
             // InformConts가 새로고침해도 그대로 내용이 남아있도록 하기 위해서, 처음부터 title, director, movieSeq를 cookie와 store에 넘겨줘서 api생성할 수 있도록 한 것이다.
             // title, director, movieSeq를 하나씩만 해봤더니 다른 영화가 연결되는 경우가 있어서 조건을 3개나 준 것.
             saveInform(`title=${movieID}&director=${director}&movieSeq=${movieSeq}`);
@@ -141,35 +157,24 @@ export default {
                 searchTxt : `title=${movieID}&director=${director}&movieSeq=${movieSeq}`, 
             };
             this.$store.commit('MOVIE_ID', searchTxtBox);
+
+            //cookie에 첫 번째 key정보 저장.
+            // (기존의 api구하는 코드에 넣는 인자 형식과 같게하기 위해 'keywordFirstBox'속에 searchTxt를 넣는 방식으로 제작한 것임.)
+            saveFirstKey(`keyword=${keyword}`);
+            const keywordFirstBox = {
+                searchTxt : `keyword=${keyword}`, 
+                check : 'keyword',
+            }; 
+            
+            // 첫 번쨰 key정보 이용해서 api구함.
+            this.$store.commit('SIMILAR_MOVIE_API', keywordFirstBox);
             
             // this.$store.commit('CLICK_MOVIE', movie); 
             this.$router.push('/inform');
         }
 
-        // moviedata() {
-        //     this.$store.state.result;
-            
-        //     // 데이터만들어서 그 이름 안에 이 값을 줘보자.
-        // },
-        // spa로 제작하려니 위의 created에서 이벤트버스로 받아오는게 작동이 안되어서, 아예 이벤트버스를 사용하지 않음.
-        // 따라서, 아래의 newMovie()함수 주석처리 한 것.
-
-        // newMovie(searchTxt, check) {
-        //     console.log(searchTxt, check);
-            
-        //     console.log('영화 검색어 받았다!!!!');
-        //     const txtCheck = {searchTxt, check};
-        //     this.$store.dispatch('FETCH_TITLE', txtCheck)
-        // }
     }
 
-    // created() {
-    //     axios
-    //     .get(' http://api.koreafilm.or.kr/openapi-data2/wisenut/search_api/search_xml2.jsp?collection=kmdb_new2&detail=N&direct=%EB%B0%95%EC%B0%AC%EC%9A%B1&ServiceKey=M1NV1B1101HZ3282TRPW')
-    //     .then(res => {
-    //         this.movieData = res.data;
-    //     });
-    // }
 }
 </script>
 
