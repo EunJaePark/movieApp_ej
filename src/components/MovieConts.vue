@@ -88,7 +88,7 @@ export default {
         this.$store.dispatch('FETCH_TITLE', searchTxtBox);
 
  
-        // 첫번째 키워드 빈칸으로 만들어줌.
+        // MovieConts페이지 접속시마다 첫번째 키워드 빈칸으로 만들어줌.
         saveFirstKey('');
 
     },

@@ -1,5 +1,5 @@
 <template>
-  <div class="similarMovie">      
+  <div class="similarMovie" v-if="keywordFirst !== 'keyword=undefined'"> <!--첫 번째 키워드가 있을 때만 보이도록 조건 준 것.-->   
         <p>비슷한 콘텐츠</p>
         <span class="text">( 오른쪽으로 스크롤 하면 순서대로 모든 영화 목록을 볼 수 있습니다. )</span>
         <span class="samekey"># {{ keywordEdit(keywordFirst) }}</span> 

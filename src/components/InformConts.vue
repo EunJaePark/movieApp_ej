@@ -8,7 +8,6 @@
           v-bind:alt="textEdit(clickMovieData.Data[0].Result[0].title)"
         />
         <div class="summaryBox">
-          {{ clickMovieData.Data[0].Result[0].keywords }}
           <div class="title">
             <h2>{{ textEdit(clickMovieData.Data[0].Result[0].title) }} ( {{ clickMovieData.Data[0].Result[0].prodYear }} )</h2>
             <p class="engTitle">{{ clickMovieData.Data[0].Result[0].titleEng }}</p>
@@ -69,12 +68,16 @@
           <div class="movieActor clear" v-if=" clickMovieData.Data[0].Result[0].actors.actor[0].actorNm">
             <p>출연 / 스탭</p>
             <div
-              v-for="(actorName, index) in clickMovieData.Data[0].Result[0].actors.actor" 
+              v-for="(actorName, index) in actorNum((clickMovieData.Data[0].Result[0].actors.actor), actors)" 
               v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
                   <span class="krNm">{{ actorEdit(actorName.actorNm) }} </span>
                   <br/>
                   <span class="enNm">{{ actorEdit(actorName.actorEnNm) }}</span> 
             </div>
+
+            <button 
+              v-if="clickMovieData.Data[0].Result[0].actors.actor.length > 10"
+              @click="actorMore(clickMovieData.Data[0].Result[0].actors.actor.length, 'yes')">{{ actorsBtnText }}</button>
           </div>
       </div><!--.detailBox-->
       
@@ -94,6 +97,9 @@ export default {
       keywordIndex: 0,
       searchText: '',
       key: '', // 키워드 중 첫 번째만 추출.(SimilarMovie.vue로 전달할 것)
+      actors: 10, // 배우 불러오는 수.(더보기 버튼 클릭시 전체 배우 수만큼 숫자 늘어남)
+      actorsAllCheck: 'no',
+      actorsBtnText: '더보기',
     }
   },
   computed: {
@@ -111,6 +117,11 @@ export default {
     
     this.$store.dispatch('FETCH_TITLE', idAPI);
 
+  },
+  beforeUpdated(){
+    console.log('actornum실행해라~~');
+    
+    this.actorNum();
   },
   methods: {
     textEdit(text) {
@@ -184,6 +195,23 @@ export default {
         return url.split('|')[index];  // split를 이용해 '|'를 기준으로 url을 나눔. 그 뒤에 각 index에 맞는 사진url을 return.
       } 
     },
+    // 배우가 10명 초과일 경우 10명까지만 추출함.
+    actorNum(actors, num) {
+      console.log(actors.length);
+      return actors.slice(0, num);
+    },
+    // '더보기'버튼 클릭하면 모든 배우 목록이 보이도록 해줌.
+    actorMore(all, moreCheck) {
+      if(this.actorsAllCheck === 'no') {
+        this.actors = all;
+        this.actorsAllCheck = moreCheck;
+        this.actorsBtnText = '접기';
+      } else if(this.actorsAllCheck === 'yes') {
+        this.actors = 10;
+        this.actorsAllCheck = 'no';
+        this.actorsBtnText = '더보기';
+      }     
+    },
     // 배우 이름에 !HE, !HS 제거해줌.
     actorEdit(name) {
       if(name.match(/!HE | !HS/gi)) return name.replace(/!HE | !HS/g, '');
@@ -204,7 +232,7 @@ export default {
             
       // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
       this.$store.commit('STATE_UTL', searchTxtBox);
-      
+
       // router이동 주소 보내줌.
       this.$router.push('/movie');
 
