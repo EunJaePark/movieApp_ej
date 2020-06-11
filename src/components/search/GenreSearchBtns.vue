@@ -29,9 +29,6 @@ export default {
             saveValue(`genre=${this.searchText}`);
             saveType(check);
 
-            // router이동 주소 보내줌.
-            this.$router.push('/movie');
-
             const searchTxtBox = {
                 searchTxt : `genre=${this.searchText}`, 
                 check : check,
@@ -40,6 +37,9 @@ export default {
             
             // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
             this.$store.commit('STATE_UTL', searchTxtBox);
+
+            // router이동 주소 보내줌.
+            this.$router.push('/movie');
 
             // input창 비워줌.
             this.searchText = '';

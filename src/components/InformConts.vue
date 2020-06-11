@@ -192,9 +192,6 @@ export default {
 
     // keyword 클릭하면 해당 키워드별 영화목록 보이게 함.
     btnSearch(check) {
-      // router이동 주소 보내줌.
-      this.$router.push('/movie');
-
       // 영화검색위해 입력한 검색어 + 검색타입 cookie에 저장해줌.
       saveValue(`keyword=${this.searchText}`);
       saveType(this.check); 
@@ -207,6 +204,10 @@ export default {
             
       // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
       this.$store.commit('STATE_UTL', searchTxtBox);
+      
+      // router이동 주소 보내줌.
+      this.$router.push('/movie');
+
 
       // input창 비워줌.
       this.searchText = '';

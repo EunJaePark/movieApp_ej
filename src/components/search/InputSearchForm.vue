@@ -70,21 +70,17 @@ export default {
             // 영화검색위해 입력한 검색어 + 검색타입 cookie에 저장해줌.
             saveValue(`${this.check}=${this.searchText}`);
             saveType(this.check);           
-
-            // router이동 주소 보내줌.
-            this.$router.push('/movie');
-            console.log(this.check);
-            
-            
+                      
             const searchTxtBox = {
                 searchTxt : `${this.check}=${this.searchText}`, 
                 check : this.check
             };
-
-            console.log(searchTxtBox);
             
             // 바로 state에 겁색어랑 체크박스확인ㅇ데이터 넣어줘봄.
             this.$store.commit('STATE_UTL', searchTxtBox);
+
+            // router이동 주소 보내줌.
+            this.$router.push('/movie');
 
             // input창 비워줌.
             this.searchText = '';
