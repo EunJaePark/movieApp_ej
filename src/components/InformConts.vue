@@ -68,17 +68,18 @@
           <div class="movieActor clear" v-if=" clickMovieData.Data[0].Result[0].actors.actor[0].actorNm">
             <p>출연 / 스탭</p>
             <div
+              class="actorsBox"
               v-for="(actorName, index) in actorNum((clickMovieData.Data[0].Result[0].actors.actor), actors)" 
               v-bind:key="index"><!--key를 actorName.actorId로 주니까 데이터 자체에 같은 배우명단이 2개인 경우가 있어서 actorId가 중복된다는 error가 발생. 일단 에러 없애기 위해서 key를 임의의 index로 주었다.-->
                   <span class="krNm">{{ actorEdit(actorName.actorNm) }} </span>
                   <br/>
                   <span class="enNm">{{ actorEdit(actorName.actorEnNm) }}</span> 
-            </div>
+            </div><!--.actorsBox-->
 
             <button 
               v-if="clickMovieData.Data[0].Result[0].actors.actor.length > 10"
               @click="actorMore(clickMovieData.Data[0].Result[0].actors.actor.length, 'yes')">{{ actorsBtnText }}</button>
-          </div>
+          </div><!--.movieActor-->
       </div><!--.detailBox-->
       
       <br/>
