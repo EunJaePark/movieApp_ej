@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { movieSearch  } from '../api/index'
-import { getValueFromCookie, getTypeFromCookie, getIDFromCookie, getFirstKey } from '../utils/cookies';
+import { getValueFromCookie, getTypeFromCookie, getIDFromCookie, getFirstKey, getLike } from '../utils/cookies';
 
 Vue.use(Vuex)
 
@@ -22,7 +22,9 @@ export default new Vuex.Store({
     similarMoviedata: [],
     movieID: {
       searchTxt : getIDFromCookie() || '',
-    }
+    },
+    // like: '',
+    likeMovies: [],
   },
   mutations: {
     SET_URL(state, data) {
@@ -34,6 +36,8 @@ export default new Vuex.Store({
       // state.thisMovie = data.Data[this.state.index].Result
     },
     STATE_UTL(state, searchTxtBox) {
+      console.log(searchTxtBox);
+      
       state.searchTxtBox = searchTxtBox
     },
     // CLICK_MOVIE(state, movie) {
@@ -47,6 +51,13 @@ export default new Vuex.Store({
     },
     SIMILAR_MOVIES(state, data) {
       state.similarMoviedata = data
+    },
+    // MOVIE_LIKE(state, likeCK) {
+    //   state.like = likeCK
+    // },
+    LIKE_MOVIES(state, movie) {
+      // console.log(movie);     
+      state.likeMovies.push(movie)
     },
   },
   actions: {
@@ -75,6 +86,23 @@ export default new Vuex.Store({
         console.log(err);
           
       })
+    },
+    LIKE_MOVIE_LIST(context, data) {
+      console.log(data);
+      // for(let i = 0; i < data.length; i++) {
+      return movieSearch(data)
+      .then(res => {
+        context.commit('LIKE_MOVIES', res.data.Data[0])
+        // console.log(res);
+        // console.log(res.data.Data[0]);
+        
+        return res;
+      })
+      .catch(err => {
+        console.log(err);
+          
+      })
+    // }
     },
   },
   modules: {

@@ -2,9 +2,14 @@
 .clear:after{ content:''; display:block; clear:both; }
 
 /* ----------AppHeader---------- */
-.appHeader{ width:100%; line-height:50px; padding:30px 100px; text-align:right; font-size:30px; background-color:transparent; }
+.appHeader{ outline:2px solid red; width:100%; line-height:50px; padding:30px 100px; text-align:right; font-size:30px; background-color:transparent; }
 .appHeader > button{ border:none; color:rgba(255, 255, 255, .7); color:#fac61c; font-size:30px; font-weight:700; background-color:transparent; }
 .appHeader > button:focus{ outline:none; } 
+.logo > button{ border:none; color:rgba(255, 255, 255, .7); color:#fac61c; font-size:30px; font-weight:700; background-color:transparent; }
+.logo > button:focus{ outline:none; } 
+
+.likeConts{ outline:1px solid red; }
+.likeConts > button{ outline:1px solid red; border:none; font-size:15px; background-color:transparent; }
 
 
 /* ----------MainConts---------- */
@@ -70,7 +75,7 @@
 
 /* ----------InformConts---------- */
 .infromConts{  max-width:1000px; margin:50px auto 0;  padding:20px; }
-.infromConts > .topData{ outline:0px solid blue; width:100%; }
+.infromConts > .topData{ outline:0px solid blue; width:100%; position:relative; } /* relative를 준 이유는 좋아요,평점 박스 배치떄문. */
 .infromConts > .topData > *{ outline:0px solid lime; float:left; }
 .infromConts > .topData > .poster{ width:213px; }
 .infromConts > .topData > .summaryBox{ width:calc(100% - 243px); margin-left:30px; }
@@ -82,6 +87,11 @@
 .infromConts > .topData > .summaryBox > .textBox > .textList > span + span{ margin-left:12px; }
 .infromConts > .topData > .summaryBox > .textBox > .textList > span + span:before{ content:''; display:inline-block; border-left:1px solid #c2c1c1; width:0px; height:13px; padding-right:12px;  }
 .infromConts > .topData > .summaryBox > .textBox > a{ margin-top:10px; color:#fac61c; /*color:#206de0;*/ display:inline-block; } /* 상세정보 링크 */
+.infromConts > .topData > .summaryBox > .likeScoreBox{ margin-top:30px; position:absolute; left:180px; bottom:5px; }
+.infromConts > .topData > .summaryBox > .likeScoreBox > .likeBtn > button{ border:none; padding:0 5px; color:rgba(255, 255, 255, 1); font-size:25px; background-color:transparent; }
+.infromConts > .topData > .summaryBox > .likeScoreBox > .likeBtn > button:hover{ color:#fa2323b3; }
+.infromConts > .topData > .summaryBox > .likeScoreBox > .likeBtn > button:focus{ outline:none; }
+.infromConts > .topData > .summaryBox > .likeScoreBox > .likeBtn > button.fillHeart{ color:#fa2323b3; }
 
 .infromConts > .detailBox{ outline:0px solid lightskyblue; margin-top:50px; }
 .infromConts > .detailBox > .movieSlogan{ font-weight:600;  }

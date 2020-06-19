@@ -51,7 +51,7 @@
 
 <script>
 import { eventbus } from '../main';
-import { saveInform, saveFirstKey } from '../utils/cookies';
+import { saveInform, saveFirstKey, saveLike } from '../utils/cookies';
 
 export default {
     computed: {
@@ -91,6 +91,9 @@ export default {
         // MovieConts페이지 접속시마다 첫번째 키워드 빈칸으로 만들어줌.
         saveFirstKey('');
 
+        // InfromConts를 벗어나면 cookie의 like와 movie_ID를 비워줌.
+        saveLike('');
+        saveInform('');
     },
     methods: {
         // 입력한 검색어 추출.(영화type도 함께 들어있어 검색어만 뽑아냄)

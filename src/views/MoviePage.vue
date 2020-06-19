@@ -10,7 +10,7 @@ import MovieConts from '../components/MovieConts';
 export default {
     components: {
         MovieConts,
-    }
+    },
 }
 </script>
 

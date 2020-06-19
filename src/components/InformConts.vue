@@ -26,6 +26,14 @@
 
             <a v-bind:href="clickMovieData.Data[0].Result[0].kmdbUrl" target="blanket">영화 상세정보</a>
           </div><!--.textBox-->
+
+          <div class="likeScoreBox">
+            <div class="likeBtn" >
+              <button 
+                @click="likeMovie(textEdit(clickMovieData.Data[0].Result[0].title), textEdit(clickMovieData.Data[0].Result[0].directors.director[0].directorNm), clickMovieData.Data[0].Result[0].movieSeq)"
+                :class="{'fillHeart':likeCheck === 'true'}">❤</button>
+            </div>
+          </div><!--.likeScoreBox-->
           <br/>
           <!-- <p>영상url: {{ clickMovieData.vods.vod[0].vodUrl }}</p>
           <video :src="clickMovieData.vods.vod[0].vodUrl"></video> -->
@@ -89,7 +97,7 @@
 </template>
 
 <script>
-import { saveValue, saveType, deleteCookie, saveFirstKey } from '../utils/cookies';
+import { saveValue, saveType, deleteCookie, saveFirstKey, saveLike, getLike, saveLikePocket, getLikePocket, getIDFromCookie } from '../utils/cookies';
 
 export default {
   data() {
@@ -101,12 +109,16 @@ export default {
       actors: 10, // 배우 불러오는 수.(더보기 버튼 클릭시 전체 배우 수만큼 숫자 늘어남)
       actorsAllCheck: 'no',
       actorsBtnText: '더보기',
+      likeCheck: '',
     }
   },
   computed: {
     clickMovieData() {
       // return this.$store.state.clickMovie;
       return this.$store.state.moviedata;
+    },
+    getCookieLike() {
+      return getLike();
     },
   },
   created() {   
@@ -118,12 +130,51 @@ export default {
     
     this.$store.dispatch('FETCH_TITLE', idAPI);
 
-  },
-  beforeUpdated(){
-    console.log('actornum실행해라~~');
+
+    // // cookie의 like와 movie_ID 내용을 확인해서 좋아요 버튼 활셩화 유무 판단.
+    // console.log('like확인!!!');
+    // console.log(this.getCookieLike);
     
-    this.actorNum();
+    // this.likeCheck = this.getCookieLike;
+    // console.log(this.likeCheck);
+
+
+    // cookie의 likePocket에 영화정보가 있으면 data의 likeCheck를 true로 해줌.(페이지 로딩시 - 즉, 다른 페이지 갔다가 다시 들어와도 그대로 기록이 남아있도록 해주는 것.)
+    let getMovieID = getIDFromCookie();   // MovieConts에서 포스터 클릭 시 cookie로 넘겨준 이 영화 정보 가져옴.
+    let getLike = getLikePocket(); // cookie에 있는 likePocket 내용 가져옴.
+    let likePKdiv = getLike.split('['); // likePocket의 내용들(객체화시킴)을 배열로 바꿔줌.
+
+    console.log(getMovieID.replace(/(\s*)/g, ''));    
+
+    for(let i = 1; i < likePKdiv.length; i++) {
+      let getLikeDiv = likePKdiv[i].replace(/[\{\}\]]/g, '').split('"')[3]; // ㅣlikePocket에 들어있는 영화정보들 일일히 비교하기위해 영화정보만 분리시킴.(like정보도 함께 있었기 때문.)
+      console.log(getLikeDiv.replace(/(\s*)/g, ''));
+      let like = likePKdiv[i].replace(/[\{\}\]]/g, '').split('"')[7];
+      console.log(like);
+      
+      
+      // getMovieID와 getLikeDiv의 공백 수가 달라서 아예 공백을 없애서 비교해줌.
+      if(getLikeDiv.replace(/(\s*)/g, '') === getMovieID.replace(/(\s*)/g, '')) { // 현재 상세페이지의 영화가 likePocket에 있으면 좋아요 버튼 true로 줌.
+        console.log('좋아요 포켓에 이 영화 있다.');
+        this.likeCheck = like;
+        break; // for문 돌면서 좋아요 포켓에 영화가 있다는 결과가 나오면 더이상 함수 돌리지 않는다.
+      } else {
+        console.log('좋아요 포켓에 이 영화 없습니다..');
+        
+        this.likeCheck = 'false';
+      }
+    }
+    
+    
+
+    
   },
+  // 메서드의 actorNum을 실행시키기 위해서 beforeUpdated를 작성해준 것이었는데, 없어도 알아서 작동된다. 태그에 v-for로 넣어줬더니.
+  // beforeUpdated(){
+  //   console.log('actornum실행해라~~');
+    
+  //   this.actorNum();
+  // },
   methods: {
     textEdit(text) {
       // 검색어를 나타내는 !HE, !HS글자 삭제.
@@ -241,7 +292,100 @@ export default {
       // input창 비워줌.
       this.searchText = '';
     },
+    // like버튼 클릭 시 data에 likeCheck데이터 전달.
+    likeMovie(title, director, movieSeq) {
+      // 좋아요 버튼 값과 해당 영화의 정보를 '좋아요주머니'배열 속 요소로 넣어주자.
 
+
+      if(this.likeCheck === 'false') {
+        this.likeCheck = 'true';
+
+        // let thisLikeInform = 'true';
+        // let thisLikeInform = {
+        //   // title: 'title=진도&director=유동종&movieSeq=09848',
+        //   // movieID: `title=${title}&director=${director}&movieSeq=${movieSeq}`,
+        //   likeCK: 'true'
+        // };   
+
+        // saveLikePocket에 넣어주기 위해 배열로 만들음.(중복되니까 나중에 정리할 방법 생각하기)
+        let likePocket = [ 
+          {movieID: `title=${title}&director=${director}&movieSeq=${movieSeq}`},
+          {likeCK: 'true'}
+        ];
+
+        
+        // let getLikePK = getLikePocket();
+        // console.log(getLikePK);
+        // console.log(getLikePK.split('['));
+        // let likePKdiv = getLikePK.split('[');
+        // console.log(likePKdiv[1].replace(/[\{\}\]]/g, '').slice(likePKdiv[1].indexOf(':'), likePKdiv[1].indexOf(',')-2).replace(/\"/g, '')); // likePocket에 들어있는 영화 정보 하나씩 추출 후 .
+        // console.log(likePKdiv);
+        
+        // console.log(thisLikeInform.movieID);
+
+        // for(let i = 0; i < likePKdiv.length; i++) {
+        //   let movieInform = likePKdiv[i].replace(/[\{\}\]]/g, '').slice(likePKdiv[1].indexOf(':'), likePKdiv[1].indexOf(',')-2).replace(/\"/g, '');
+        //   if(movieInform !== thisLikeInform.movieID) {
+        //     console.log('영화가 pocket에 없다!!!');
+            
+        //   }
+        // }
+
+        // cookie에 like값 넣어줌.
+        // saveLike(thisLikeInform); 
+        // cookie의 likePocket에 like버튼 누른 영화정보 넣어줌.
+        saveLikePocket(likePocket);
+      } else {
+        console.log('좋아요 취소합니다!!!!');
+        
+        this.likeCheck = 'false';
+
+        let likePocket = 'false';
+        saveLikePocket(likePocket);
+
+
+        // let thisLikeInform = 'false';
+        // let thisLikeInform = {
+        //   // title: 'title=진도&director=유동종&movieSeq=09848',
+        //   // movieID: `title=${title}&director=${director}&movieSeq=${movieSeq}`,
+        //   likeCK: 'false'
+        // };
+
+        // saveLike(thisLikeInform);
+
+        // 쿠키의 likePocket에 저장된 정보 가져와서 좋아요 취소한 영화 데이터 삭제시켜 줘야함.
+
+
+
+
+
+        // let likePocket = [ // saveLikePocket에 넣어주기 위해 배열로 만들음.(중복되니까 나중에 정리할 방법 생각하기)
+        //   {movieID: `title=${title}&director=${director}&movieSeq=${movieSeq}`},
+        //   {likeCK: 'false'}
+        // ];
+
+        // // 쿠키의 likePocket에 저장된 정보 가져와서 좋아요 취소한 영화 데이터 삭제시켜 줘야함.
+        // let getLikePK = getLikePocket();
+        // let likePKdiv = getLikePK.split('[');
+        // console.log('likePocket에 저장된 영화 데이터 불러온다!!!!');        
+        // console.log(getLikePK);
+        // console.log(likePKdiv);
+        
+        // for(let i = 0; i < likePKdiv.length; i++) {
+        //   // let getLikeDiv = likePKdiv[i].replace(/[\{\}\]]/g, '').split('"');
+        //   let newLikeMovie = likePocket[0][Object.keys(likePocket[0])[0]];
+
+        //   console.log(likePKdiv[i].replace(/[\{\}\]]/g, '').split('"')[3]);
+        //   if(likePKdiv[i].replace(/[\{\}\]]/g, '').split('"')[3] === newLikeMovie) {
+        //     saveLikePocket(likePKdiv[i].replace('"true"', '"false"'));
+        //   }
+        // }
+        // console.log(likePocket[0][Object.keys(likePocket[0])[0]]);
+        
+        // saveLikePocket(likePocket);
+      }
+      console.log(this.likeCheck);
+    },
   }
 }
 
